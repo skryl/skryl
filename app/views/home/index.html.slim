@@ -1,5 +1,5 @@
 - content_for(:title) do
-  | #{App.full_name} &mdash; #{App.display_name}
+  | #{App.full_name}
 - content_for(:fonts) do
   link href='http://fonts.googleapis.com/css?family=Raleway:100|&amp;subset=latin' rel='stylesheet' type='text/css' 
 
@@ -7,105 +7,82 @@
   .col_12.last#header
     header
       h1= App.display_name
-      /p#special I'm in Austin, TX for #{link_to '#sxsw', 'http://sxsw.com'}, #{link_to 'follow me!', 'http://twitter.com/fyrerise'}
-      /p#special I'm currently in Las Vegas for #{link_to '#mix11', 'http://live.visitmix.com'}, #{link_to 'follow me!', 'http://twitter.com/fyrerise'}
+  .col_12
 
-#boxes
-  .row
-    .col_6#about
-      h2 About
-      p My name is #{link_to 'Brandur', 'http://brandur.org'}. I'm a polyglot software engineer and part-time designer working at #{link_to 'Heroku', 'http://heroku.com'} in San Francisco, California. I'm a Canadian expat. My name is Icelandic. Drop me a line at #{link_to 'brandur@mutelight.org', 'mailto:brandur@mutelight.org'}.
-      p Aside from technology, I'm interested in energy and how it relates to our society, travel, longboarding, muay thai, symphonic metal, and the guitar.
-      p  
-        a(href='http://twitter.com/fyrerise' title='Follow Brandur on Twitter') I tweet often.
+.row
+  .col_6#about
+    h2 About
+    p My name is #{link_to 'Alex', 'http://skryl.com'}. I'm a freelance software engineer working in Chicago, Illinois. Drop me a line at #{link_to 'aleksey.skryl@gmail.com', 'mailto:aleksey.skryl@gmail.com'}.
 
-    .col_6.last#projects
-      h2 Projects
-      p These are the open source projects that I'm currently working on:
-      ul
-        li #{link_to 'Parched', 'https://github.com/brandur/parched'} &mdash; A minimalist Git-backed wiki with support for Tilt's set of template engines, syntax highlighting, and MathJax.
-        li #{link_to 'Dorian', 'https://github.com/brandur/dorian'} &mdash; A personal identity manager and aggregator written in Rails 3.1. The site you're looking at now is a running demo of this project.
-        li #{link_to 'Facts', 'https://github.com/brandur/facts'} &mdash; A tool for getting smarter and winning arguments. Coupled with a #{link_to 'command line interface', 'https://github.com/brandur/facts-cli'} and a #{link_to 'Twitter bot', 'https://github.com/brandur/facts-twitter'}.
-        /li #{link_to 'Askja', 'https://github.com/brandur/askja'} &mdash; Minimalist blogging platform written in Rails as a flexible alternative to static generators.
-
-  .row
-    .col_4#articles
-      h2= link_to 'Articles', 'http://mutelight.org'
-      p I <a href="http://mutelight.org">blog about technology</a> and other interesting things. Here are the latest articles that I've written:
-      ul
-        - @articles.each do |a|
-          li
-            = link_to a.title, a.permalink
-            = ' '
-            span.meta= a.published_at.getlocal.strftime('%b %e, %Y')
-
-    .col_4#books
-      h2= link_to 'Books', :books
-      p
-        | These days I try to read mostly non-fiction. #{link_to 'My entire reading history', :books} is available online. 
-        - if @book
-          | The most recent book that I read was <em>#{@book.title}</em> by #{@book.author}.
-      = render :partial => 'charts/books_chart'
-
-    .col_4.last#facts
-      h2= link_to 'Facts', 'http://facts.brandur.org'
-      p
-        | I maintain a #{link_to 'facts database', 'http://facts.brandur.org'} to retain knowledge and try to make myself smarter. 
-        - if defined?(@fact)
-          | Most recently, I added facts on #{link_to @fact.category_name, "http://facts.brandur.org/#{@fact.category_permalink}"}. 
-        | Get a slow stream of random facts by following #{link_to '@factsproject', 'http://twitter.com/factsproject'}.
-      = render :partial => 'charts/facts_chart'
-
-  .row
-    .col_6#twitter
-      h2= link_to 'Twitter', :twitter
-      = render :partial => 'charts/tweets_chart', :locals => { :is_compact => true }
-      p Microblogging lowers the barrier of broadcasting interesting things online. Here are my latest tweets:
-      ul
-        - @tweets.each do |t|
-          li
-            = raw t.content_html
-            = ' '
-            span.meta= link_to distance_of_time_in_words(t.published_at.getlocal, Time.now, true), t.permalink
-      p= link_to "Every one of my #{pluralize(number_with_delimiter(@tweet_count), 'tweet')}", :twitter
-
-    .col_6.last#github
-      h2= link_to 'GitHub', 'https://github.com/brandur'
-      = render :partial => 'charts/action_chart', :locals => { :is_compact => true }
-      p GitHub is today's resume for the professional coder, and is deeply integrated into my workflow. This is my latest activity:
-      ul#actions
-        - @actions.each do |a|
-          li
-            = raw a.title
-            = ' '
-            span.meta= link_to distance_of_time_in_words(a.published_at.getlocal, Time.now, true), a.permalink
-            / GitHub's in our chain of trust
-            = raw a.content_html
-      p= link_to "See my Github profile", 'https://github.com/brandur'
-
-  /.box#photos
-    h2 Photos
-    ul.photos
-      - @photos.each do |p|
+  .col_6.last#articles
+    h2= link_to 'Articles', 'http://orig1n.net'
+    p I <a href="http://orig1n.net">blog</a> about tech and other interesting things. Here are the latest articles that I've written:
+    ul
+      - @articles.each do |a|
         li
-          a href=p.permalink
-            img src=p.thumbnail_url
-    .clear
-    p My favorite collections of photos are from when <a href="http://www.flickr.com/photos/brandurleach/collections/72157613774765987/">I visited Japan</a>, and when <a href="http://www.flickr.com/photos/brandurleach/collections/72157601552888447/">I stayed in Iceland</a>.
+          = link_to a.title, a.permalink
+          = ' '
+          span.meta= a.published_at.getlocal.strftime('%b %e, %Y')
 
-  .row
-    .col_12.last#self
-      h2 Self-development
-      p These are my current goals for continuing self improvement.
-      ul
-        li Meditate 15 minutes per day to clear the mind, and maintain focus.
-        li Be the machine. Don't give into every emotional need, think about what your goals are and how you're going to accomplish them. #{link_to '1', 'http://coderoom.wordpress.com/2010/08/04/discipline-be-the-machine/'}
-        li Set goals every week. We're all wired for weakness, and some of us choose to be strong. #{link_to '2', 'http://www.sebastianmarshall.com/?p=222'}
-        li Chase meaning, not happiness. #{link_to '3', 'http://www.sebastianmarshall.com/?p=220'}
-        li Don't focus on yourself. Focus on others and genuinely like them. Everything you learn will be from other people. #{link_to '4', 'http://vimeo.com/11414505'}
-        li Use stoicism's negative visualization to lead a happier life. #{link_to '5', 'http://www.boingboing.net/2010/09/20/how-becoming-a-stoic.html#comments'}
-        li Wake at 4:30 AM, and finish personal projects in the 2-3 hours before work. #{link_to '6', 'http://www.sebastianmarshall.com/working-full-time-where-to-find-time-to-start-a-side-business'}
-        li Work on tangible stuff, document it, and claim credit. #{link_to '7', 'http://www.sebastianmarshall.com/how-to-get-a-raise'}
+.row
+  .col_6#books
+    h2= link_to 'Books', :books
+    p
+      | #{link_to 'My entire reading history', :books} is available online.
+      - if @book
+        | The most recent book that I read was <em>#{@book.title}</em> by #{@book.author}.
+    = render :partial => 'charts/books_chart'
+
+  .col_6.last#projects
+    h2 Projects
+    p These are the open source projects that I'm currently working on:
+    ul
+      li #{link_to 'automata', 'https://github.com/skryl/automata'} &mdash; An N-Dimensional cellular automata simulation framework.
+      li #{link_to 'qbwc', 'https://github.com/skryl/qbwc'} &mdash; A Rails plugin to interface with Intuit's Quickbooks Web Connector.
+      li #{link_to 'quickbooks_api', 'https://github.com/skryl/quickbooks_api'} &mdash; A Ruby wrapper for Intuit's Quickbooks XML API.
+      li #{link_to 'config_logic', 'https://github.com/skryl/config_logic'} &mdash; Intuitive configuration managment.
+      li #{link_to 'fuzzy_notes', 'https://github.com/skryl/fuzzy_notes'} &mdash; A CLI note manager with fuzzy search, encryption, and Evernote sync.
+      li #{link_to 'buffered_logger', 'https://github.com/skryl/buffered_logger'} &mdash; A flexible, thread safe logger with custom formatting and ANSI color.
+
+
+
+.row
+  .col_6#twitter
+    h2= link_to 'Twitter', :twitter
+    = render :partial => 'charts/tweets_chart', :locals => { :is_compact => true }
+    p Here are my latest tweets:
+    ul
+      - @tweets.each do |t|
+        li
+          = raw t.content_html
+          = ' '
+          span.meta= link_to distance_of_time_in_words(t.published_at.getlocal, Time.now, true), t.permalink
+    p= link_to "Every one of my #{pluralize(number_with_delimiter(@tweet_count), 'tweet')}", :twitter
+
+  .col_6.last#github
+    h2= link_to 'GitHub', 'https://github.com/skryl'
+    = render :partial => 'charts/action_chart', :locals => { :is_compact => true }
+    p This is my latest activity:
+    ul#actions
+      - @actions.each do |a|
+        li
+          = raw a.title
+          = ' '
+          span.meta= link_to distance_of_time_in_words(a.published_at.getlocal, Time.now, true), a.permalink
+          / GitHub's in our chain of trust
+          = raw a.content_html
+    p= link_to "See my Github profile", 'https://github.com/skryl'
+
+/* .row*/
+/*   .col_6#photos*/
+/*     h2 Photos*/
+/*     ul.photos*/
+/*       - @photos.each do |p|*/
+/*         li*/
+/*           a href=p.permalink*/
+/*             img src=p.thumbnail_url*/
+/*     .clear*/
+/*     p placeholder
 
 .row
   .col_12.last

@@ -3,6 +3,7 @@ require 'xml_helper'
 
 class Goodreads < ModuleBase
   include XmlHelper
+  READ_AT = "2005-01-01"
 
   def update
     num_updates = 0
@@ -11,7 +12,7 @@ class Goodreads < ModuleBase
       book = Book.new :goodreads_id => r.find('book/id').first.content, 
         :isbn13      => r.find('book/isbn13').first.content, 
         :title       => r.find('book/title').first.content.strip, 
-        :finished_at => Time.parse(r.find('read_at').first.content), 
+        :finished_at => Time.parse(r.find('read_at').first.content),
         :num_pages   => r.find('book/num_pages').first.content, 
         :rating      => r.find('rating').first.content
       r.find('book/authors/author').each do |a|
