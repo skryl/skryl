@@ -19,8 +19,10 @@ html
     - content_for(:post_body) do
       javascript:
         var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-6901854-2']);
+        _gaq.push(['_setAccount', 'UA-29940604-1']);
+        _gaq.push(['_setDomainName', 'skryl.com']);
         _gaq.push(['_trackPageview']);
+
         (function() {
           var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
           ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
@@ -29,5 +31,3 @@ html
 
     = content_for?(:content) ? yield(:content) : yield
     = yield(:post_body)
-    - if Rails.env == 'production'
-      |= google_analytics_js 
