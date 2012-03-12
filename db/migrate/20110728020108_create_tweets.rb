@@ -3,6 +3,7 @@ class CreateTweets < ActiveRecord::Migration
     create_table :tweets do |t|
       t.string :content
       t.string :permalink
+      t.string :guid
       t.datetime :published_at
 
       t.timestamps

@@ -3,7 +3,7 @@ class Tweet < ActiveRecord::Base
   scope :not_mention, where('is_mention = ?', false)
   scope :ordered, order('published_at DESC')
   validates_inclusion_of :is_mention, :in => [true, false]
-  validates_presence_of :content, :permalink, :published_at
+  validates_presence_of :content, :permalink, :guid, :published_at
   validates_uniqueness_of :permalink
 
   def content_html

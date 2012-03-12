@@ -39,16 +39,6 @@ ActiveRecord::Schema.define(:version => 20111225093655) do
     t.datetime "updated_at"
   end
 
-  create_table "facts", :force => true do |t|
-    t.integer  "facts_id"
-    t.text     "content"
-    t.datetime "created_at"
-    t.integer  "category_id"
-    t.string   "category_name"
-    t.string   "category_permalink"
-    t.datetime "updated_at"
-  end
-
   create_table "github_actions", :force => true do |t|
     t.string   "github_id"
     t.string   "title"
@@ -62,6 +52,7 @@ ActiveRecord::Schema.define(:version => 20111225093655) do
   create_table "tweets", :force => true do |t|
     t.string   "content"
     t.string   "permalink"
+    t.string   "guid"
     t.datetime "published_at"
     t.datetime "created_at"
     t.datetime "updated_at"

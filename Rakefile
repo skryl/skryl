@@ -24,3 +24,16 @@ task :update => :environment do
   Rails.cache.clear
   puts "Cleared cache"
 end
+
+desc 'Iinitial update from all source modules'
+task :initial_update => :environment do
+  App.module_instances do |mod|
+    begin
+      mod.initial_update if mod.respond_to? :initial_update
+    rescue
+      $stderr.puts "Update error: " + $!.message
+    end
+  end
+  Rails.cache.clear
+  puts "Cleared cache"
+end
