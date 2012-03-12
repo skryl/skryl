@@ -1,5 +1,5 @@
 module ApplicationHelper
-  def gogole_analytics_js
+  def google_analytics_js
     %{
     <script type="text/javascript">
 
