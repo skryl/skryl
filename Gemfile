@@ -34,4 +34,5 @@ group :production do
   gem 'dalli'
   gem 'pg'
   gem 'thin'
+  gem 'newrelic_rpm'
 end

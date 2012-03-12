@@ -58,6 +58,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.17.2)
     multi_json (1.0.4)
+    newrelic_rpm (3.3.2)
     pg (0.12.2)
     polyglot (0.3.3)
     rack (1.3.6)
@@ -138,6 +139,7 @@ DEPENDENCIES
   dalli
   jquery-rails
   libxml-ruby
+  newrelic_rpm
   pg
   rails (~> 3.1)
   rspec-rails
