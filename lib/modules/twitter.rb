@@ -8,7 +8,6 @@ class Twitter < ModuleBase
   def update(opts = OPTS)
     num_updates = 0
     uri = "http://twitter.com/statuses/user_timeline/#{config.user}.rss#{opts}"
-    puts uri
     rss_for(uri) do |item|
       tweet = Tweet.new :content => item.title.gsub(/^[^:]+: /, ''), 
         :permalink => item.link, 
