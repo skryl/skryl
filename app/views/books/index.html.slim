@@ -6,8 +6,7 @@
     header
       = render :partial => 'shared/go_home'
       h1 Books
-
-    p I've read #{pluralize(@books_count, 'book')} since #{@books_by_year.keys.min}, the most recent of which was <em>#{@book.title}</em> by #{@book.author}. I track my reading with #{link_to 'Goodreads', 'http://www.goodreads.com/review/list/5896508?shelf=read'}.
+p I've read #{pluralize(@books_count, 'book')} since #{@books_by_year.keys.min}, the most recent of which was <em>#{@book.title}</em> by #{@book.author}. I track my reading with #{link_to 'Goodreads', 'http://www.goodreads.com/review/list/' + App.goodreads.user_id + '?shelf=read'}.
 
 .row
   .col_6

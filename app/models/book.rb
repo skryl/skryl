@@ -3,7 +3,7 @@ require 'extensions'
 class Book < ActiveRecord::Base
   scope :ordered, order('finished_at DESC')
   has_many :authors, :class_name => 'BookAuthor'
-  validates_presence_of :goodreads_id, :title, :finished_at, :num_pages
+  validates_presence_of :goodreads_id, :title, :finished_at
   validates_uniqueness_of :goodreads_id
 
   def add_author(name)

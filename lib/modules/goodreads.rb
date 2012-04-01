@@ -21,6 +21,9 @@ class Goodreads < ModuleBase
       if book.valid?
         book.save
         num_updates += 1
+      else
+        puts book.title
+        puts book.errors.full_messages
       end
     end
     puts "Fetched #{num_updates} new book(s)"

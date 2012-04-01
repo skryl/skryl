@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(:version => 20111225093655) do
     t.string   "isbn13"
     t.string   "title",        :null => false
     t.datetime "finished_at",  :null => false
-    t.integer  "num_pages",    :null => false
+    t.integer  "num_pages"
     t.integer  "rating"
     t.datetime "created_at"
     t.datetime "updated_at"
