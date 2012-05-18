@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120401063321) do
+ActiveRecord::Schema.define(:version => 20120518013416) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(:version => 20120401063321) do
     t.integer  "rating"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "notes_url"
   end
 
   create_table "github_actions", :force => true do |t|

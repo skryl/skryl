@@ -28,7 +28,7 @@
   .col_6#books
     h2= link_to 'Books', :books
     p
-      | #{link_to 'My entire reading history', :books} is available online.
+      | #{link_to('My entire reading history and notes', :books) + " are available online. "} 
       - if @book
         | The most recent book that I read was <em>#{@book.title}</em> by #{@book.author}.
     = render :partial => 'charts/books_chart'
