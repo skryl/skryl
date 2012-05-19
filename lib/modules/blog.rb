@@ -6,16 +6,18 @@ class Blog < ModuleBase
 
   def update
     num_updates = 0
-    rss_for(config.atom) do |item|
-      blog_post = Article.new :title => item.title.content, 
-        :permalink    => item.link.href, 
-        :published_at => Time.parse(item.published.to_s)
-      if blog_post.valid?
-        blog_post.save
-        num_updates += 1
-      else
-        puts blog_post.title
-        puts blog_post.errors.full_messages
+    config.atom.each do |a|
+      rss_for(a) do |item|
+        blog_post = Article.new :title => item.title.content, 
+          :permalink    => item.link.href, 
+          :published_at => Time.parse(item.published.to_s)
+        if blog_post.valid?
+          blog_post.save
+          num_updates += 1
+        else
+          puts blog_post.title
+          puts blog_post.errors.full_messages
+        end
       end
     end
     puts "Fetched #{num_updates} new article(s)"
