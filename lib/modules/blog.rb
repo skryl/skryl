@@ -8,9 +8,9 @@ class Blog < ModuleBase
     num_updates = 0
     config.atom.each do |a|
       rss_for(a) do |item|
-        blog_post = Article.new :title => item.title.content, 
-          :permalink    => item.link.href, 
-          :published_at => Time.parse(item.published.to_s)
+        blog_post = Article.new :title => item.title, 
+          :permalink    => item.link, 
+          :published_at => Time.parse(item.pubDate.to_s)
         if blog_post.valid?
           blog_post.save
           num_updates += 1

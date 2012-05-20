@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0"><channel><atom:link rel="hub" href="http://tumblr.superfeedr.com/" xmlns:atom="http://www.w3.org/2005/Atom"/><description></description><title>blog.skryl</title><generator>Tumblr (3.0; @skryl)</generator><link>http://blog.skryl.org/</link><item><title>Permanently disable 're-open windows at login' on OSX</title><description>&lt;p&gt;This is one of the most annoying new features of OSX:&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://orig1n.net/wp-content/uploads/2012/04/Screen-Shot-2012-04-24-at-6.22.56-PM.jpg"&gt;&lt;img alt="" class="alignnone size-medium wp-image-68" height="140" src="http://orig1n.net/wp-content/uploads/2012/04/Screen-Shot-2012-04-24-at-6.22.56-PM-300x140.jpg" title="Reopen" width="300"/&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The worst part about it is, even if if you uncheck the checkbox, upon logging back into the system your desktop will be bombarded by spawning application windows. Using the ‘hide’ checkbox in the Login Options helps reduce this onslaught to some extent but doesn’t work for all apps.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://orig1n.net/wp-content/uploads/2012/04/Screen-Shot-2012-04-24-at-6.29.44-PM.jpg"&gt;&lt;img alt="" class="alignnone size-medium wp-image-71" height="235" src="http://orig1n.net/wp-content/uploads/2012/04/Screen-Shot-2012-04-24-at-6.29.44-PM-300x235.jpg" title="Hide" width="300"/&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I &lt;a href="http://ikluge.com/2011/08/24/getting-rid-of-lions-application-restore/"&gt;stumbled&lt;/a&gt; across a more reliable way of disabling automatic application restore by erasing OSX’s memory of what was open when you logged out. OSX records this information in a plist located in&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;/Users/[user]/Library/Preferences/ByHost/com.apple.loginwindow.[UUID].plist&lt;br/&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Here is what it looks like&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://orig1n.net/wp-content/uploads/2012/04/Screen-Shot-2012-04-24-at-6.58.42-PM.jpg"&gt;&lt;img alt="" class="alignnone size-medium wp-image-75" height="131" src="http://orig1n.net/wp-content/uploads/2012/04/Screen-Shot-2012-04-24-at-6.58.42-PM-300x131.jpg" title="Screen Shot 2012-04-24 at 6.58.42 PM" width="300"/&gt;&lt;br/&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Deleting this plist before the OS gets to read it should solve our problem. One way to accomplish this is with a LoginHook.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;A Login Hook is a script that is executed immediately after the user logs on but before other login processes are performed. The script runs as root and needs to be chmod’d +x to be made executable. This feature has existed in OS X for some time and is handy for some account specific tasks.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;~ Matt Danger (&lt;a href="http://mattdanger.net/2009/01/scripting-login-tasks-in-mac-os-x/"&gt;source&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;Our login hook will run the following script, which you can save as &lt;em&gt;/usr/bin/loginfix.sh&lt;br/&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre&gt;#!/bin/bash
+rm /Users/*/Library/Preferences/ByHost/com.apple.loginwindow.*&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Make sure the script is executable&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre&gt;sudo chmod +x /usr/bin/loginfix.sh&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Now, create the login hook&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre&gt; sudo defaults write com.apple.loginwindow LoginHook /usr/bin/loginfix.sh&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Delete the login hook to restore the default behavior&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre&gt;sudo defaults delete com.apple.loginwindow LoginHook&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;You will still be presented with the ‘re-open windows’ dialog when trying to restart or log out of your machine but you can safely ignore it. Enjoy your clean desktop!&lt;/p&gt;</description><link>http://blog.skryl.org/post/23361780527</link><guid>http://blog.skryl.org/post/23361780527</guid><pubDate>Sat, 19 May 2012 13:20:44 -0500</pubDate></item></channel></rss>
