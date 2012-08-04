@@ -13,6 +13,7 @@ gem 'sass'
 gem 'slim'
 gem 'uglifier'
 gem 'whenever', :require => false
+gem 'my_zeo', :git => "git://github.com/skryl/my_zeo.git"
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -22,6 +23,8 @@ gem 'whenever', :require => false
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
+
+gem 'pry', :group => :development
 
 group :development, :test do
   gem 'rspec-rails'

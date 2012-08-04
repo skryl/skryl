@@ -1,0 +1,31 @@
+.chart#sleep_chart
+- content_for(:javascript) do
+  javascript:
+    var sleepCountByDayCategories = [ #{@sleep_count_by_day.map{|k, v| "'#{k.strftime("%b %d")}'"}.join(', ')} ];
+    var sleepCountByDayData       = [ #{@sleep_count_by_day.map{|k, v| v}.join(', ')} ];
+    var sleepCountByDayStep       = #{defined?(is_compact) && is_compact ? 2 : 1};
+
+  coffee:
+    $ ->
+       chart = new Highcharts.Chart
+          chart:
+            renderTo: 'sleep_chart'
+            defaultSeriesType: 'line'
+          title:
+            text: 'Sleep by Day'
+          xAxis:
+            categories: sleepCountByDayCategories
+            labels:
+              rotation: -45
+              align: 'right'
+              step: sleepCountByDayStep
+          yAxis:
+            min: 0
+            title:
+              text: null
+          tooltip:
+            formatter: ->
+              this.y + (if this.y != 1 then ' hours' else ' hour') + ' in ' + this.x
+          series: [
+            { name: 'hours', data: sleepCountByDayData }
+          ]

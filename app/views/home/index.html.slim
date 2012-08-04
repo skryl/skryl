@@ -47,7 +47,6 @@
       li #{link_to 'fuzzy_notes', 'https://github.com/skryl/fuzzy_notes'} &mdash; A CLI note manager with fuzzy search, encryption, and Evernote sync.
 
 
-
 .row
   .col_6#twitter
     h2= link_to 'Twitter', :twitter
@@ -85,6 +84,20 @@
 /*             img src=p.thumbnail_url*/
 /*     .clear*/
 /*     p placeholder
+
+.row
+  .col_12#Sleep
+    h2= link_to 'Sleep', :sleep
+    = render :partial => 'charts/sleep_chart'
+    /* p Here is my most recent sleep data:*/
+    /* ul*/
+    /*   - @sleep_records.each do |r|*/
+    /*     li*/
+    /*       = raw t.content_html*/
+    /*       = ' '*/
+    /*       span.meta= link_to distance_of_time_in_words(t.published_at.getlocal, Time.now, true), t.permalink*/
+    /* p= link_to "Every one of my #{pluralize(number_with_delimiter(@tweet_count), 'tweet')}", :twitter*/
+
 
 .row
   .col_12.last

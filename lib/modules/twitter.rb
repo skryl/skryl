@@ -17,8 +17,8 @@ class Twitter < ModuleBase
         tweet.save
         num_updates += 1
       else
-        puts tweet.content
-        puts tweet.errors.full_messages
+        # puts tweet.content
+        # puts tweet.errors.full_messages
       end
     end
     puts "Fetched #{num_updates} new tweet(s)"

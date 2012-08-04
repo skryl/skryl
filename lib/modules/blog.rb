@@ -15,8 +15,8 @@ class Blog < ModuleBase
           blog_post.save
           num_updates += 1
         else
-          puts blog_post.title
-          puts blog_post.errors.full_messages
+          # puts blog_post.title
+          # puts blog_post.errors.full_messages
         end
       end
     end

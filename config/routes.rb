@@ -3,6 +3,7 @@ Dorian::Application.routes.draw do
   match 'twitter/:options' => 'tweets#index'
   match 'twitter' => 'tweets#index'
   match 'articles' => 'articles#index'
+  match 'sleep' => 'sleep#index'
 
   root :to => 'home#index'
 
