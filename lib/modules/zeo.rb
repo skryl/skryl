@@ -18,7 +18,7 @@ class Zeo < ModuleBase
           sleep_record.save
           num_updates += 1
         else
-          puts sleep_record.sleep_time
+          puts sleep_record.bed_time
           puts sleep_record.errors.full_messages
         end
       else
