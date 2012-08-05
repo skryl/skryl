@@ -3,17 +3,18 @@
   javascript:
     var sleepChartCategories = [#{@sleep_count.map{|k, v| "'#{defined?(is_compact) && is_compact ? k.strftime("%b \\'%y") : k.strftime("%b %d") }'"}.join(', ')}];
     var sleepChartData       = [#{@sleep_count.map{|k, v| v}.join(', ')}];
-    var chartTitle           = "#{defined?(is_compact) && is_compact ? 'Sleep Average by Month' : 'Sleep by Day'}";
+    var sleepChartTitle      = "#{defined?(is_compact) && is_compact ? 'Sleep Average by Month' : 'Sleep by Day'}";
     var sleepCountStep       = #{defined?(is_compact) && is_compact ? 1 : 2};
+    var sleepChartType       = "#{defined?(is_compact) && is_compact ?  'areaspline' : 'line'}"; 
 
   coffee:
     $ ->
        chart = new Highcharts.Chart
           chart:
             renderTo: 'sleep_chart'
-            defaultSeriesType: 'line'
+            defaultSeriesType: sleepChartType
           title:
-            text: chartTitle
+            text: sleepChartTitle
           xAxis:
             categories: sleepChartCategories
             labels:
@@ -26,7 +27,7 @@
               text: null
           tooltip:
             formatter: ->
-              this.y + (if this.y != 1 then ' hours' else ' hour') + ' on ' + this.x + 'th'
+              this.y + (if this.y != 1 then ' hours' else ' hour') + ' in ' + this.x
           series: [
             { name: 'hours', data: sleepChartData }
           ]

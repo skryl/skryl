@@ -74,8 +74,9 @@
     p= link_to "See my Github profile", 'https://github.com/skryl'
 
 .row
-  .col_6#Sleep
+  .col_12#Sleep
     h2= link_to 'Sleep', :sleep
+    p I track my #{link_to 'sleep quality', :sleep} in order to improve my mental performance.
     = render :partial => 'charts/sleep_chart', :locals => { :is_compact => true }
     /* p Here is my most recent sleep data:*/
     /* ul*/
@@ -86,9 +87,9 @@
     /*       span.meta= link_to distance_of_time_in_words(t.published_at.getlocal, Time.now, true), t.permalink*/
     /* p= link_to "Every one of my #{pluralize(number_with_delimiter(@tweet_count), 'tweet')}", :twitter*/
 
-  .col_6.last#Exersice
-    h2= link_to 'Exersice', :exercise
-    = render :partial => 'charts/sleep_chart'
+  /* .col_6.last#Exersice*/
+  /*   h2= link_to 'Exersice', :exercise*/
+  /*   = render :partial => 'charts/sleep_chart'*/
 
 
 /* .row*/
