@@ -7,7 +7,6 @@ class Zeo < ModuleBase
     client = config.zeo_client
     last_record_date = SleepRecord.maximum(:start_date) || Date.parse('1979-01-01')
     date_list = client.get_dates_with_sleep_data_in_range(:date_from => last_record_date.strftime)[:response][:date_list]
-    p date_list
 
     date_list && [date_list[:date]].flatten.each do |d|
       date = SleepRecord.parse_api_time(d).to_date
