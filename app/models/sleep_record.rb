@@ -1,6 +1,6 @@
 class SleepRecord < ActiveRecord::Base 
 
-  scope :ordered, order('bed_time ASC')
+  scope :ordered, order('bed_time DESC')
   scope :enough_data, where('length(sleep_graph) > 25')
   scope :last_n_days, lambda { |n| where("bed_time > ?", (Date.today - n)) }
 
@@ -10,7 +10,7 @@ class SleepRecord < ActiveRecord::Base
                    'LIGHT'     => 2,
                    'DEEP'      => 1 }
 
-  DAYS_TO_GRAPH = 90
+  DAYS_TO_GRAPH = 60
 
 
   validates_presence_of :bed_time, :rise_time, :start_date, :awakenings, :awakenings_zq_points,
@@ -61,7 +61,7 @@ class SleepRecord < ActiveRecord::Base
 # monthly stats
 
   def self.sleep_records_by_month
-    SleepRecord.order('bed_time ASC').group_by { |s| s.bed_time.beginning_of_month }
+    SleepRecord.all.group_by { |s| s.bed_time.beginning_of_month }
   end
 
   def self.sleep_average_by_month
