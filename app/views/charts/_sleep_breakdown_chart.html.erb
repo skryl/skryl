@@ -1,0 +1,77 @@
+<% content_for :javascript do %>
+<script type='text/javascript'>
+  (function() {
+
+    $(function() {
+      var chart;
+      return chart = new Highcharts.Chart({
+        chart: {
+          renderTo: 'sleep_breakdown_chart<%= record_id %>',
+          defaultSeriesType: 'column'
+        },
+        title: {
+          text: ''
+        },
+        xAxis: {
+          categories: gon.sleep_breakdown_chart_categories["<%= record_id %>"],
+          labels: {
+            rotation: -45,
+            align: 'right',
+            overflow: 'justify',
+            step: 5
+          }
+        },
+        yAxis: {
+          min: 0,
+          categories: [],
+          title: {
+            text: null
+          },
+          labels: {
+            enabled: false
+          }
+        },
+        plotOptions: {
+          column: {
+              pointPadding: 0,
+              borderWidth: 0,
+              pointWidth: 4,
+              shadow: false
+          }
+        },
+        tooltip: {
+          formatter: function() {
+            function switchResult(n) {
+              switch(n) { case 1: return 'Deep'; break; case 2: return 'Light'; break; case 3: return 'REM'; break; case 4: return 'Awake'; break; };
+            };
+            return switchResult(this.y) + ' at ' + this.x
+          }
+        },
+        series: [
+          {
+            name: 'Deep',
+            color: 'grey',
+            data: gon.sleep_breakdown_chart_data["<%= record_id %>"][0]
+          },
+          {
+            name: 'Light',
+            color: '#92A8CD',
+            data: gon.sleep_breakdown_chart_data["<%= record_id %>"][1]
+          },
+          {
+            name: 'REM',
+            color: '#B5CA92',
+            data: gon.sleep_breakdown_chart_data["<%= record_id %>"][2]
+          },
+          {
+            name: 'Awake',
+            color: '#A47D7C',
+            data: gon.sleep_breakdown_chart_data["<%= record_id %>"][3]
+          }
+        ]
+      });
+    });
+
+  }).call(this);
+</script>
+<% end %>

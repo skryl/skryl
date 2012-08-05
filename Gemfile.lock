@@ -52,6 +52,9 @@ GEM
     eventmachine (0.12.10)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    gon (4.0.0)
+      actionpack (>= 2.3.0)
+      json
     hike (1.2.1)
     httparty (0.8.3)
       multi_json (~> 1.0)
@@ -153,6 +156,7 @@ DEPENDENCIES
   app
   coffee-script
   dalli
+  gon
   jquery-rails
   libxml-ruby
   my_zeo!

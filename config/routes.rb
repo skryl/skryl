@@ -4,6 +4,7 @@ Dorian::Application.routes.draw do
   match 'twitter' => 'tweets#index'
   match 'articles' => 'articles#index'
   match 'sleep' => 'sleep#index'
+  match 'exercise' => 'exercise#index'
 
   root :to => 'home#index'
 

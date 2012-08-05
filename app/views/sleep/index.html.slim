@@ -1,0 +1,36 @@
+- content_for(:title) do
+  == 'Sleep &mdash; skryl.com'
+
+.row
+  .col_12.last#header
+    header
+      = render :partial => 'shared/go_home'
+      h1 Sleep
+p I track my sleep patterns using the #{link_to 'MyZeo', 'http://www.myzeo.com/sleep/'} iPhone App. 
+
+.row
+  .col_12
+    = render :partial => 'charts/sleep_chart'
+
+.row
+  .col_1
+    ul.section_list
+      - @sleep_by_year_month.each do |year, sleep_by_month|
+        li
+          = link_to year, "#year_#{year}"
+          ul
+            - sleep_by_month.each do |month, tweet|
+              li= link_to month_name(month), "#month_#{year}_#{month}"
+  .col_11.last
+    - @sleep_by_year_month.each do |year, sleep_by_month|
+      h2 id="year_#{year}"= year
+      .sleep_year
+        - sleep_by_month.each do |month, sleep|
+          / No top margin for the first month in each year for a cleaner look
+          - extra = month == sleep_by_month.keys.first ? 'top' : ''
+          - sleep.sort!{|t1, t2| t2.bed_time <=> t1.bed_time}.each do |s|
+            h3 id="month_#{year}_#{month}" class="#{extra}" #{month_name(month)} #{s.bed_time.day}
+            div*{class: "chart", id: "sleep_breakdown_chart#{s.id}"}
+            = render :partial => 'charts/sleep_breakdown_chart', :locals => {:record_id => s.id}
+
+    = render :partial => 'shared/footer'

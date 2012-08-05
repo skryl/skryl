@@ -1,9 +1,10 @@
 .chart#sleep_chart
 - content_for(:javascript) do
   javascript:
-    var sleepCountByDayCategories = [ #{@sleep_count_by_day.map{|k, v| "'#{k.strftime("%b %d")}'"}.join(', ')} ];
-    var sleepCountByDayData       = [ #{@sleep_count_by_day.map{|k, v| v}.join(', ')} ];
-    var sleepCountByDayStep       = #{defined?(is_compact) && is_compact ? 2 : 1};
+    var sleepChartCategories = [#{@sleep_count.map{|k, v| "'#{defined?(is_compact) && is_compact ? k.strftime("%b \\'%y") : k.strftime("%b %d") }'"}.join(', ')}];
+    var sleepChartData       = [#{@sleep_count.map{|k, v| v}.join(', ')}];
+    var chartTitle           = "#{defined?(is_compact) && is_compact ? 'Sleep Average by Month' : 'Sleep by Day'}";
+    var sleepCountStep       = #{defined?(is_compact) && is_compact ? 1 : 2};
 
   coffee:
     $ ->
@@ -12,20 +13,20 @@
             renderTo: 'sleep_chart'
             defaultSeriesType: 'line'
           title:
-            text: 'Sleep by Day'
+            text: chartTitle
           xAxis:
-            categories: sleepCountByDayCategories
+            categories: sleepChartCategories
             labels:
               rotation: -45
               align: 'right'
-              step: sleepCountByDayStep
+              step: sleepCountStep
           yAxis:
             min: 0
             title:
               text: null
           tooltip:
             formatter: ->
-              this.y + (if this.y != 1 then ' hours' else ' hour') + ' in ' + this.x
+              this.y + (if this.y != 1 then ' hours' else ' hour') + ' on ' + this.x + 'th'
           series: [
-            { name: 'hours', data: sleepCountByDayData }
+            { name: 'hours', data: sleepChartData }
           ]

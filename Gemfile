@@ -11,6 +11,7 @@ gem 'jquery-rails'
 gem 'libxml-ruby'
 gem 'sass'
 gem 'slim'
+gem 'gon'
 gem 'uglifier'
 gem 'whenever', :require => false
 gem 'my_zeo', :git => "git://github.com/skryl/my_zeo.git"
