@@ -2,6 +2,7 @@
 .cache_rake
 .DS_Store
 .sass-cache
+.credentials
 config/config.yml
 content
 current_article

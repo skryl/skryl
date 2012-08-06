@@ -124,9 +124,9 @@ class SleepRecord < ActiveRecord::Base
   
 private
 
-  def self.parse_api_time(t)
+  def self.parse_api_time(t, opts = {})
     t = t.with_indifferent_access
-    Time.parse("#{t[:year] || '1979'}-#{t[:month] || '01'}-#{t[:day] || '01'} #{t[:hour] || '00'}:#{t[:minute] || '00'}:#{t[:second] || '00'}")
+    Time.parse("#{t[:year] || '1979'}-#{t[:month] || '01'}-#{t[:day] || '01'} #{t[:hour] || '00'}:#{t[:minute] || '00'}:#{t[:second] || '00'} #{opts[:with_zone] ? '+0000' : ''}")
   end
 
   def self.parse_api_graph(api_graph)
