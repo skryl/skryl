@@ -33,7 +33,7 @@ class SleepRecord < ActiveRecord::Base
   end
 
   def graph_categories
-    graph_data.first.map.with_index { |p, i| (bed_time + i * 20.minutes).strftime("%I:%M %p") }
+    graph_data.first.map.with_index { |p, i| (bed_time + i * 5.minutes).strftime("%I:%M %p") }
   end
 
 # daily stats

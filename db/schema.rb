@@ -17,15 +17,15 @@ ActiveRecord::Schema.define(:version => 20120805233406) do
     t.string   "title"
     t.string   "permalink"
     t.datetime "published_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "book_authors", :force => true do |t|
     t.integer  "book_id",    :limit => 255
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   create_table "books", :force => true do |t|
@@ -35,8 +35,8 @@ ActiveRecord::Schema.define(:version => 20120805233406) do
     t.datetime "finished_at",  :null => false
     t.integer  "num_pages"
     t.integer  "rating"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.string   "notes_url"
   end
 
@@ -46,8 +46,8 @@ ActiveRecord::Schema.define(:version => 20120805233406) do
     t.string   "permalink"
     t.datetime "published_at"
     t.text     "content"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "sleep_records", :force => true do |t|
@@ -82,8 +82,8 @@ ActiveRecord::Schema.define(:version => 20120805233406) do
     t.string   "permalink"
     t.string   "guid"
     t.datetime "published_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.boolean  "is_mention"
   end
 
