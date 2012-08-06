@@ -18,12 +18,15 @@ class Goodreads < ModuleBase
       r.find('book/authors/author').each do |a|
         book.add_author(a.find('name').first.content.strip)
       end
-      if book.valid?
-        book.save
-        num_updates += 1
-      else
-        # puts book.title
-        # puts book.errors.full_messages
+
+      unless Book.find_by_goodreads_id(book.goodreads_id)
+        if book.valid?
+          book.save
+          num_updates += 1
+        else
+          puts book.title
+          puts book.errors.full_messages
+        end
       end
     end
     puts "Fetched #{num_updates} new book(s)"

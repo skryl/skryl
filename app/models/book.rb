@@ -1,5 +1,3 @@
-require 'extensions'
-
 class Book < ActiveRecord::Base
   scope :ordered, order('finished_at DESC')
   has_many :authors, :class_name => 'BookAuthor'

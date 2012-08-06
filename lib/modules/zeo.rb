@@ -13,16 +13,14 @@ class Zeo < ModuleBase
       sleep_record = \
         SleepRecord.new_from_api_response( client.get_sleep_record_for_date(:date => date.strftime)[:response] )
 
-      if sleep_record
+      unless SleepRecord.find_by_bed_time(sleep_record.bed_time)
         if sleep_record.valid?
           sleep_record.save
           num_updates += 1
         else
-          puts "Invalid sleep record for #{sleep_record.bed_time}"
+          puts sleep_record.bed_time
           puts sleep_record.errors.full_messages
         end
-      else
-        puts "Could not parse sleep record!"
       end
     end
 

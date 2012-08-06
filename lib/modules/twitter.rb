@@ -13,12 +13,15 @@ class Twitter < ModuleBase
         :permalink => item.link, 
         :published_at => Time.parse(item.date.to_s),
         :guid => item.link.split('/').last
-      if tweet.valid?
-        tweet.save
-        num_updates += 1
-      else
-        # puts tweet.content
-        # puts tweet.errors.full_messages
+
+      unless Tweet.find_by_permalink(item.link)
+        if tweet.valid?
+          tweet.save
+          num_updates += 1
+        else
+          puts tweet.permalink
+          puts tweet.errors.full_messages
+        end
       end
     end
     puts "Fetched #{num_updates} new tweet(s)"

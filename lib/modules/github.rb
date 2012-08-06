@@ -12,9 +12,14 @@ class Github < ModuleBase
         :permalink    => item.link.href, 
         :published_at => Time.parse(item.published.to_s), 
         :content      => item.content.content
-      if action.valid?
-        action.save
-        num_updates += 1
+      unless GithubAction.find_by_github_id(action.github_id)
+        if action.valid?
+          action.save
+          num_updates += 1
+        else
+          puts action.title
+          puts action.errors.full_messages
+        end
       end
     end
     puts "Fetched #{num_updates} new action(s)"

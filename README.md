@@ -1,7 +1,7 @@
 Dorian
 ======
 
-A personal identity manager and aggregator written in Rails 3.1. A running demo is available at [brandur.org](http://brandur.org).
+A personal identity manager and aggregator written in Rails 3.1. A running demo is available at [skryl.org](http://skryl.org).
 
 **Warning**: Currently in development status and prone to constant change!
 
@@ -12,6 +12,7 @@ Currently implemented modules for data aggregation:
 * GitHub via RSS feed
 * GoodReads via XML API
 * Twitter via RSS feed
+* Zeo via REST API
 
 Installation
 ------------

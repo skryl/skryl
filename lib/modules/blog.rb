@@ -11,12 +11,15 @@ class Blog < ModuleBase
         blog_post = Article.new :title => item.title, 
           :permalink    => item.link, 
           :published_at => Time.parse(item.pubDate.to_s)
-        if blog_post.valid?
-          blog_post.save
-          num_updates += 1
-        else
-          # puts blog_post.title
-          # puts blog_post.errors.full_messages
+
+        unless Article.find_by_permalink(blog_post.permalink)
+          if blog_post.valid?
+            blog_post.save
+            num_updates += 1
+          else
+            puts blog_post.title
+            puts blog_post.errors.full_messages
+          end
         end
       end
     end
