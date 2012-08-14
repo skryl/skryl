@@ -11,5 +11,6 @@ class HomeController < ApplicationController
     @tweet_count_by_month    = Tweet.not_mention.order('published_at ASC').count_by {|t| t.published_at.beginning_of_month}
     @tweets                  = Tweet.not_mention.ordered.limit(10)
     @sleep_count             = SleepRecord.sleep_average_by_month
+    @exercise_count          = Activity.average_by_month
   end
 end

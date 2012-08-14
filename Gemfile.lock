@@ -5,6 +5,14 @@ GIT
     my_zeo (0.4.4)
       httparty
 
+GIT
+  remote: git://github.com/skryl/nike.git
+  revision: e9d571251c015a26961338d0ac6ffbd0e01b81a0
+  specs:
+    nike (0.2.2)
+      activesupport (>= 3.2.0)
+      hashie (>= 1.2.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -55,6 +63,7 @@ GEM
     gon (4.0.0)
       actionpack (>= 2.3.0)
       json
+    hashie (1.2.0)
     hike (1.2.1)
     httparty (0.8.3)
       multi_json (~> 1.0)
@@ -161,6 +170,7 @@ DEPENDENCIES
   libxml-ruby
   my_zeo!
   newrelic_rpm
+  nike!
   pg
   pry
   rails (~> 3.1)

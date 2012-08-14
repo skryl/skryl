@@ -1,0 +1,33 @@
+.chart#exercise_chart
+- content_for(:javascript) do
+  javascript:
+    var exerciseChartCategories = [#{@exercise_count.map{|k, v| "'#{defined?(is_compact) && is_compact ? k.strftime("%b \\'%y") : k.strftime("%b %d") }'"}.join(', ')}];
+    var exerciseChartData       = [#{@exercise_count.map{|k, v| v}.join(', ')}];
+    var exerciseChartTitle      = "#{defined?(is_compact) && is_compact ? 'Daily Average by Month' : 'Total by Day'}";
+    var exerciseCountStep       = #{defined?(is_compact) && is_compact ? 1 : 2};
+    var exerciseChartType       = "#{defined?(is_compact) && is_compact ?  'areaspline' : 'line'}"; 
+
+  coffee:
+    $ ->
+       chart = new Highcharts.Chart
+          chart:
+            renderTo: 'exercise_chart'
+            defaultSeriesType: exerciseChartType
+          title:
+            text: exerciseChartTitle
+          xAxis:
+            categories: exerciseChartCategories
+            labels:
+              rotation: -45
+              align: 'right'
+              step: exerciseCountStep
+          yAxis:
+            min: 0
+            title:
+              text: null
+          tooltip:
+            formatter: ->
+              this.y + (if this.y != 1 then ' minutes' else ' minute') + ' in ' + this.x
+          series: [
+            { name: 'minutes', data: exerciseChartData }
+          ]

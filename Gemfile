@@ -16,6 +16,7 @@ gem 'gon'
 gem 'uglifier'
 gem 'whenever', :require => false
 gem 'my_zeo', :git => "git://github.com/skryl/my_zeo.git"
+gem 'nike', :git => "git://github.com/skryl/nike.git"
 
 # Use unicorn as the web server
 # gem 'unicorn'

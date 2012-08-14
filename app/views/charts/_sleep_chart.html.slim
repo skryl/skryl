@@ -3,7 +3,7 @@
   javascript:
     var sleepChartCategories = [#{@sleep_count.map{|k, v| "'#{defined?(is_compact) && is_compact ? k.strftime("%b \\'%y") : k.strftime("%b %d") }'"}.join(', ')}];
     var sleepChartData       = [#{@sleep_count.map{|k, v| v}.join(', ')}];
-    var sleepChartTitle      = "#{defined?(is_compact) && is_compact ? 'Sleep Average by Month' : 'Sleep by Day'}";
+    var sleepChartTitle      = "#{defined?(is_compact) && is_compact ? 'Daily Average by Month' : 'Total by Day'}";
     var sleepCountStep       = #{defined?(is_compact) && is_compact ? 1 : 2};
     var sleepChartType       = "#{defined?(is_compact) && is_compact ?  'areaspline' : 'line'}"; 
 
