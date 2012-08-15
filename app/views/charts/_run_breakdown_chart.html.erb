@@ -1,0 +1,64 @@
+<% content_for :javascript do %>
+<script type='text/javascript'>
+  (function() {
+
+    $(function() {
+      var chart;
+      return chart = new Highcharts.Chart({
+        chart: {
+          renderTo: 'activity_breakdown_chart<%= record_id %>',
+          zoomType: 'x'
+        },
+        title: {
+          text: ''
+        },
+        subtitle: {
+          text: 'Cycling'
+        },
+        tooltip: { shared: true },
+        xAxis: {
+          tickInterval: 10,
+          startOnTick: false,
+          categories: gon.activity_breakdown_chart_categories["<%= record_id %>"],
+          labels: {
+            rotation: -45,
+            align: 'right',
+            overflow: 'justify',
+            step: 2
+          }
+        },
+        yAxis: {
+          min: 0,
+          max: 35,
+          tickInterval: 5,
+          startOnTick: false,
+          minorGridLineWidth: 0,
+          gridLineWidth: 0,
+          alternateGridColor: null,
+          title: { text: null },
+          labels: { enabled: false }
+        },
+        plotOptions: {
+          spline: {
+            marker: { enabled: false, states: { hover: { enabled: true, radius: 5 } } },
+            states: { hover: { lineWidth: 2 } },
+            shadow: false
+          }
+        },
+        tooltip: {
+          formatter: function() {
+            return this.y + 'mph at ' + this.x
+          }
+        },
+        series: [{
+          name: 'Speed',
+          color: '#4572A7',
+          data: gon.activity_breakdown_chart_data["<%= record_id %>"],
+          type: 'spline'
+        }] 
+      });
+    });
+
+  }).call(this);
+</script>
+<% end %>

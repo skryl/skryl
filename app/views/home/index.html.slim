@@ -12,11 +12,11 @@
 .row
   .col_6#about
     h2 About
-    p My name is #{link_to 'Alex', 'http://skryl.org'}. I'm a freelance software engineer living in Chicago. Drop me a line at #{link_to 'aleksey.skryl@gmail.com', 'mailto:aleksey.skryl@gmail.com'}.
+    p My name is #{link_to 'Alex', 'http://skryl.org'}. I'm a software engineer currently living in Chicago. This is my personal data aggregator. It is here to remind me where I have been and to prepare me for where I am going. Feel free to check out my #{link_to 'Resume', 'http://careers.stackoverflow.com/skryl'} or drop me a line at #{link_to 'aleksey.skryl@gmail.com', 'mailto:aleksey.skryl@gmail.com'}.
 
   .col_6.last#articles
     h2= link_to 'Articles', :articles
-    p I #{link_to 'blog', :articles} about complexity and other interesting things. Here are the latest articles that I've written:
+    p I #{link_to 'blog', :articles} about technology and other interesting things. Here are the latest articles that I've written:
     ul
       - @articles.each do |a|
         li
@@ -37,13 +37,14 @@
     h2= link_to 'Projects', "https://github.com/skryl"
     p These are the #{link_to 'open source projects', "https://github.com/skryl"} that I'm currently working on:
     ul
+      li #{link_to 'nike', 'https://github.com/skryl/nike'} &mdash; A REST Client for the Nike+ API.
       li #{link_to 'polly', 'https://github.com/skryl/polly'} &mdash; A DSL for working with symbolic expressions in Ruby.
       li #{link_to 'heroku_db_env', 'https://github.com/skryl/heroku_db_env'} &mdash; Overwrite Heroku's auto-generated database configuration.
       li #{link_to 'pg_schema', 'https://github.com/skryl/pg_schema'} &mdash; Simple schema support for the Rails pg adapter.
       li #{link_to 'automata', 'https://github.com/skryl/automata'} &mdash; An n-Dimensional cellular automata simulation and evolution framework.
       li #{link_to 'qbwc', 'https://github.com/skryl/qbwc'} &mdash; A Rails gem for interfacing with Intuit's Quickbooks Web Connector.
       li #{link_to 'quickbooks_api', 'https://github.com/skryl/quickbooks_api'} &mdash; A Ruby wrapper for Intuit's Quickbooks XML API.
-      li #{link_to 'config_logic', 'https://github.com/skryl/config_logic'} &mdash; Intuitive configuration managment for Ruby projects.
+      li #{link_to 'config_logic', 'https://github.com/skryl/config_logic'} &mdash; Intuitive configuration managment for Ruby and Rails projects.
       li #{link_to 'fuzzy_notes', 'https://github.com/skryl/fuzzy_notes'} &mdash; A CLI note manager with fuzzy search, encryption, and Evernote sync.
 
 .row
@@ -74,15 +75,21 @@
     p= link_to "See my Github profile", 'https://github.com/skryl'
 
 .row
-  .col_6#Sleep
-    h2= link_to 'Sleep', :sleep
-    p I track my #{link_to 'sleep', :sleep} in order to improve my mental performance.
-    = render :partial => 'charts/sleep_chart', :locals => { :is_compact => true }
 
-  .col_6.last#Exercise
-    h2= link_to 'Exercise', :exercise
-    p I track my #{link_to 'exercise', :exercise} to stay healthy.
-    = render :partial => 'charts/exercise_chart', :locals => { :is_compact => true }
+  .col_12#Physical
+    h2 #{link_to 'Sleep', :sleep} + #{link_to 'Exercise', :exercise}
+    p I track my #{link_to 'sleep', :sleep} and #{link_to 'exercise', :exercise} to improve my physical and mental performance.
+    = render :partial => 'charts/sleep_exercise_chart', :locals => { :is_compact => true }
+
+  /* .col_6#Sleep*/
+  /*   h2= link_to 'Sleep', :sleep*/
+  /*   p I track my #{link_to 'sleep', :sleep} in order to improve my mental performance.*/
+  /*   = render :partial => 'charts/sleep_chart', :locals => { :is_compact => true }*/
+
+  /* .col_6.last#Exercise*/
+  /*   h2= link_to 'Exercise', :exercise*/
+  /*   p I track my #{link_to 'exercise', :exercise} to stay healthy.*/
+  /*   = render :partial => 'charts/exercise_chart', :locals => { :is_compact => true }*/
 
 
 /* .row*/

@@ -1,0 +1,55 @@
+.chart#exercise_chart
+- content_for(:javascript) do
+  javascript:
+    var sleepChartCategories =    [#{@sleep_count.map{|k, v| "'#{k.strftime("%b \\'%y")}'"}.join(', ')}];
+    var sleepChartData          = [#{@sleep_count.map{|k, v| v}.join(', ')}];
+    var exerciseChartCategories = [#{@exercise_count.map{|k, v| "'#{k.strftime("%b \\'%y")}'"}.join(', ')}];
+    var exerciseChartData       = [#{@exercise_count.map{|k, v| v}.join(', ')}];
+
+  coffee:
+    $ ->
+       chart = new Highcharts.Chart
+          chart:
+            renderTo: 'exercise_chart',
+          title:
+            text: ''
+          xAxis:
+            categories: sleepChartCategories
+            labels:
+              rotation: -45
+              align: 'right'
+              step: 1
+          yAxis: [ {
+            min: 0, 
+            max: 50, 
+            title: { text: '' },  
+            minorGridLineWidth: 0,
+            gridLineWidth: 0,
+            alternateGridColor: null,
+            labels: { style: { color: '#4572A7' } }, 
+          },
+          { 
+            min: 4, 
+            max: 12, 
+            tickInterval: 4,
+            opposite: true, 
+            title: { text: '' }, 
+            minorGridLineWidth: 0,
+            gridLineWidth: 0,
+            alternateGridColor: null,
+            labels: { style: { color: '#AA4643' } },
+            plotBands: [
+              { from: 4, to: 6, color: 'rgba(0, 0, 0, 0)', label: { text: '', style: { color: '#606060' } } }, 
+              { from: 6, to: 8, color: 'rgba(0, 0, 0, 0.04)', label: { text: '', style: { color: '#606060' } } }, 
+              { from: 8, to: 10, color: 'rgba(0, 0, 0, 0)', label: { text: '', style: { color: '#606060' } } }, 
+              { from: 10, to: 12, color: 'rgba(0, 0, 0, 0.04)', label: { text: '', style: { color: '#606060' } } }
+            ] 
+          } ]
+          tooltip: 
+            formatter: -> 
+              this.y + (if this.series.name == 'Sleep' then ' hours' else ' minutes') + ' in ' + this.x 
+          series: [
+            { name: 'Exercise', data: exerciseChartData, type: 'areaspline' },
+            { name: 'Sleep', data: sleepChartData, yAxis: 1, type: 'spline'}
+          ]
+

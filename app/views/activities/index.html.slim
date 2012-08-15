@@ -6,7 +6,7 @@
     header
       = render :partial => 'shared/go_home'
       h1 Exercise
-p I track my physical activity using the #{link_to 'Nike+', 'http://nikeplus.nike.com/plus/'} iPhone App and #{link_to 'SportBand', 'http://nikeplus.nike.com/plus/products/sport_band/'}. 
+p I track my physical activity using the #{link_to 'Nike+', 'http://nikeplus.nike.com/plus/'} iPhone App and #{link_to 'SportBand', 'http://nikeplus.nike.com/plus/products/sport_band/'}. You can click and drag in the plots to zoom in. 
 
 .row
   .col_12
@@ -21,16 +21,19 @@ p I track my physical activity using the #{link_to 'Nike+', 'http://nikeplus.nik
           ul
             - activity_by_month.each do |month, tweet|
               li= link_to month_name(month), "#month_#{year}_#{month}"
-/*   .col_11.last*/
-/*     - @activity_by_year_month.each do |year, activity_by_month|*/
-/*       h2 id="year_#{year}"= year*/
-/*       .activity_year*/
-/*         - activity_by_month.each do |month, activity|*/
-/*           / No top margin for the first month in each year for a cleaner look*/
-/*           - extra = month == activity_by_month.keys.first ? 'top' : ''*/
-/*           - activity.sort!{|t1, t2| t2.bed_time <=> t1.bed_time}.each do |s|*/
-/*             h3 id="month_#{year}_#{month}" class="#{extra}" #{month_name(month)} #{s.bed_time.day}*/
-/*             div*{class: "chart", id: "activity_breakdown_chart#{s.id}"}*/
-/*             = render :partial => 'charts/activity_breakdown_chart', :locals => {:record_id => s.id}*/
+  .col_11.last
+    - @activity_by_year_month.each do |year, activity_by_month|
+      h2 id="year_#{year}"= year
+      .activity_year
+        - activity_by_month.each do |month, activity|
+          / No top margin for the first month in each year for a cleaner look
+          - extra = month == activity_by_month.keys.first ? 'top' : ''
+          - activity.sort!{|t1, t2| t2.start_time <=> t1.start_time}.each do |a|
+            h3 id="month_#{year}_#{month}" class="#{extra}" #{month_name(month)} #{a.start_time.day}
+            div*{class: "chart", id: "activity_breakdown_chart#{a.id}"}
+            - if a.activity_type == 'RUN'
+              = render :partial => 'charts/run_breakdown_chart', :locals => {:record_id => a.id}
+            - else
+              = render :partial => 'charts/hr_breakdown_chart', :locals => {:record_id => a.id}
 
     = render :partial => 'shared/footer'
