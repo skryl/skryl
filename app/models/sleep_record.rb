@@ -11,7 +11,7 @@ class SleepRecord < ActiveRecord::Base
                    'LIGHT'     => 2,
                    'DEEP'      => 1 }
 
-  DAYS_TO_GRAPH = 60
+  DAYS_TO_GRAPH = 30
   MONTHS_TO_GRAPH = 6
 
 

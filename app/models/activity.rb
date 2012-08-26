@@ -10,7 +10,7 @@ class Activity < ActiveRecord::Base
   scope :last_n_days, lambda { |n| where("start_time > ?", (Date.today - n)) }
   scope :last_n_months, lambda { |n| where("start_time > ?", (Date.today - n.months)) }
 
-  DAYS_TO_GRAPH = 60
+  DAYS_TO_GRAPH = 30
   MONTHS_TO_GRAPH = 6
 
   RUN_REDUCE_FACTOR = 4
