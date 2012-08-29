@@ -3,7 +3,7 @@ class SleepRecord < ActiveRecord::Base
   scope :ordered, order('bed_time DESC')
   scope :enough_data, where('length(sleep_graph) > 25')
   scope :last_n_days, lambda { |n| where("bed_time > ?", (Date.today - n)) }
-  scope :last_n_months, lambda { |n| where("bed_time > ?", (Date.today - n.months)) }
+  scope :last_n_months, lambda { |n| where("bed_time > ?", (Date.today.end_of_month - (n-1).months)) }
 
   SLEEP_STAGES = { 'UNDEFINED' => 0,
                    'WAKE'      => 4,
@@ -45,7 +45,9 @@ class SleepRecord < ActiveRecord::Base
   end
 
   def self.sleep_records_by_day
-    sleep_records_to_graph.group_by { |s| s.bed_time.to_date }
+    sleep_records_to_graph.group_by do |s| 
+      ((s.bed_time - s.bed_time.beginning_of_day) < (s.bed_time.end_of_day - s.bed_time) ? s.bed_time : s.bed_time + 1.days).to_date
+    end
   end
 
   def self.slept_hours_by_day
@@ -55,9 +57,7 @@ class SleepRecord < ActiveRecord::Base
   end
 
   def self.sleep_count_by_day
-    date_range = ((Date.today - DAYS_TO_GRAPH) .. Date.today)
-    hours_by_day = date_range.inject({}) { |h, d| h[d] = 0; h }
-    hours_by_day.merge(slept_hours_by_day)
+    empty_days_to_graph.merge(slept_hours_by_day)
   end
 
 # monthly stats
@@ -67,10 +67,12 @@ class SleepRecord < ActiveRecord::Base
   end
 
   def self.sleep_average_by_month
-    sleep_records_by_month.inject({}) do |h, (date, records)| 
+    sleep_time_by_month = sleep_records_by_month.inject({}) do |h, (date, records)| 
       h[date.to_date] = (records.map { |r| r.total_z_in_hours }.sum / records.size).round(2); h
     end
+    empty_months_to_graph.merge(sleep_time_by_month)
   end
+
 
 # yearly stats
 
@@ -125,6 +127,14 @@ class SleepRecord < ActiveRecord::Base
   end
   
 private
+
+  def self.empty_days_to_graph
+    ((Date.today - DAYS_TO_GRAPH) .. Date.today).inject({}) { |h, d| h[d] = 0; h }
+  end
+
+  def self.empty_months_to_graph
+    (0...MONTHS_TO_GRAPH).to_a.reverse.inject({}) { |h, m_ago| h[(Date.today - m_ago.months).beginning_of_month] = 8; h }
+  end
 
   def self.parse_api_time(t, opts = {})
     t = t.with_indifferent_access

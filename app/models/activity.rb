@@ -8,7 +8,7 @@ class Activity < ActiveRecord::Base
 
   scope :ordered, order('start_time DESC')
   scope :last_n_days, lambda { |n| where("start_time > ?", (Date.today - n)) }
-  scope :last_n_months, lambda { |n| where("start_time > ?", (Date.today - n.months)) }
+  scope :last_n_months, lambda { |n| where("start_time > ?", (Date.today.end_of_month - (n-1).months)) }
 
   DAYS_TO_GRAPH = 30
   MONTHS_TO_GRAPH = 6
@@ -96,9 +96,7 @@ class Activity < ActiveRecord::Base
   end
 
   def self.graph_total_by_day
-    date_range = ((Date.today - DAYS_TO_GRAPH) .. Date.today)
-    hours_by_day = date_range.inject({}) { |h, d| h[d] = 0; h }
-    hours_by_day.merge(total_by_day)
+    empty_days_to_graph.merge(total_by_day)
   end
 
 # monthly stats
@@ -108,9 +106,10 @@ class Activity < ActiveRecord::Base
   end
 
   def self.average_by_month
-    activity_by_month.inject({}) do |h, (date, records)| 
+    activity_time_by_month = activity_by_month.inject({}) do |h, (date, records)| 
       h[date.to_date] = (records.map { |r| r.duration }.sum / 30).round(2); h
     end
+    empty_months_to_graph.merge(activity_time_by_month)
   end
 
 # yearly stats
@@ -125,6 +124,14 @@ class Activity < ActiveRecord::Base
   end
 
 private
+
+  def self.empty_days_to_graph
+    ((Date.today - DAYS_TO_GRAPH) .. Date.today).inject({}) { |h, d| h[d] = 0; h }
+  end
+
+  def self.empty_months_to_graph
+    (0...MONTHS_TO_GRAPH).to_a.reverse.inject({}) { |h, m_ago| h[(Date.today - m_ago.months).beginning_of_month] = 0; h }
+  end
 
   def run?
     activity_type == 'RUN'
