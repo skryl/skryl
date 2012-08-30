@@ -1,9 +1,5 @@
 class SleepRecord < ActiveRecord::Base 
-
-  scope :ordered, order('bed_time DESC')
-  scope :enough_data, where('length(sleep_graph) > 25')
-  scope :last_n_days, lambda { |n| where("bed_time > ?", (Date.today - n)) }
-  scope :last_n_months, lambda { |n| where("bed_time > ?", (Date.today.end_of_month - (n-1).months)) }
+  extend GraphStats
 
   SLEEP_STAGES = { 'UNDEFINED' => 0,
                    'WAKE'      => 4,
@@ -11,8 +7,13 @@ class SleepRecord < ActiveRecord::Base
                    'LIGHT'     => 2,
                    'DEEP'      => 1 }
 
-  DAYS_TO_GRAPH = 30
-  MONTHS_TO_GRAPH = 6
+  set_start_time_field :bed_time
+  set_duration_field :total_z_in_hours
+  set_days_to_graph 30
+  set_detailed_days_to_graph 10
+  set_months_to_graph 6
+  set_default_monthly_value 8
+  set_shift_proc lambda { |s| ((s.bed_time - s.bed_time.beginning_of_day) < (s.bed_time.end_of_day - s.bed_time) ? -1.days : 0) }
 
 
   validates_presence_of :bed_time, :rise_time, :start_date, :awakenings, :awakenings_zq_points,
@@ -36,53 +37,6 @@ class SleepRecord < ActiveRecord::Base
 
   def graph_categories
     graph_data.first.map.with_index { |p, i| (bed_time + i * 5.minutes).strftime("%I:%M %p") }
-  end
-
-# daily stats
-
-  def self.sleep_records_to_graph
-    SleepRecord.last_n_days(DAYS_TO_GRAPH).enough_data.ordered
-  end
-
-  def self.sleep_records_by_day
-    sleep_records_to_graph.group_by do |s| 
-      ((s.bed_time - s.bed_time.beginning_of_day) < (s.bed_time.end_of_day - s.bed_time) ? s.bed_time : s.bed_time + 1.days).to_date
-    end
-  end
-
-  def self.slept_hours_by_day
-    sleep_records_by_day.inject({}) do |h, (date, records)| 
-      h[date.to_date] = records.map { |r| r.total_z_in_hours }.sum; h
-    end
-  end
-
-  def self.sleep_count_by_day
-    empty_days_to_graph.merge(slept_hours_by_day)
-  end
-
-# monthly stats
-
-  def self.sleep_records_by_month
-    SleepRecord.last_n_months(MONTHS_TO_GRAPH).group_by { |s| s.bed_time.beginning_of_month }
-  end
-
-  def self.sleep_average_by_month
-    sleep_time_by_month = sleep_records_by_month.inject({}) do |h, (date, records)| 
-      h[date.to_date] = (records.map { |r| r.total_z_in_hours }.sum / records.size).round(2); h
-    end
-    empty_months_to_graph.merge(sleep_time_by_month)
-  end
-
-
-# yearly stats
-
-  def self.sleep_records_by_year
-    sleep_records_to_graph.group_by{|t| t.bed_time.year}
-  end
-
-  def self.sleep_records_by_year_month
-    sleep_by_year = sleep_records_by_year
-    sleep_by_year.merge(sleep_by_year){|y, ts| ts.group_by{|t| t.bed_time.month}}
   end
 
 ### 
@@ -118,23 +72,11 @@ class SleepRecord < ActiveRecord::Base
     new(sleep_record_attributes)
   end
 
-  def method_missing(name, *args, &block)
-    case name
-    when /(.*)_in_hours$/ 
-      (send($1)/60.0).round(2)
-    else super
-    end
+  def total_z_in_hours
+    (total_z/60.0).round(2)
   end
   
 private
-
-  def self.empty_days_to_graph
-    ((Date.today - DAYS_TO_GRAPH) .. Date.today).inject({}) { |h, d| h[d] = 0; h }
-  end
-
-  def self.empty_months_to_graph
-    (0...MONTHS_TO_GRAPH).to_a.reverse.inject({}) { |h, m_ago| h[(Date.today - m_ago.months).beginning_of_month] = 8; h }
-  end
 
   def self.parse_api_time(t, opts = {})
     t = t.with_indifferent_access

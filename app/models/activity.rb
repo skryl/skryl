@@ -1,4 +1,5 @@
 class Activity < ActiveRecord::Base
+  extend GraphStats
   
   serialize :gps_data
   serialize :hr_data
@@ -6,12 +7,11 @@ class Activity < ActiveRecord::Base
 
   validates_presence_of :activity_id, :activity_type, :start_time, :duration, :distance, :calories 
 
-  scope :ordered, order('start_time DESC')
-  scope :last_n_days, lambda { |n| where("start_time > ?", (Date.today - n)) }
-  scope :last_n_months, lambda { |n| where("start_time > ?", (Date.today.end_of_month - (n-1).months)) }
-
-  DAYS_TO_GRAPH = 30
-  MONTHS_TO_GRAPH = 6
+  set_start_time_field :start_time
+  set_duration_field :duration
+  set_days_to_graph 30
+  set_months_to_graph 6
+  set_average_range 30
 
   RUN_REDUCE_FACTOR = 4
   RUN_DY_CUTOFF = 7
@@ -63,85 +63,20 @@ class Activity < ActiveRecord::Base
     @graph_data ||= run? ? normalize(speed_data) : normalize(hr_data)
   end
 
-  # def geo_data
-  #   return [] unless gps_data
-  #   geo = Array.new(3, [])
-  #   gps_data.each do |h| 
-  #     geo[0] << h['lat']
-  #     geo[1] << h['lon']
-  #     geo[2] << h['ele']
-  #   end
-  #   reduce(geo[2], (geo[2].size/graph_data.size).to_i)
-  # end
-
   def graph_categories
     reduce_factor = (run? ? RUN_REDUCE_FACTOR : HR_REDUCE_FACTOR)
     @categories ||= graph_data.map.with_index { |p, i| (start_time + i * (reduce_factor * 10.seconds)).strftime("%I:%M %p") }
   end
 
-# daily stats
-
-  def self.activity_to_graph
-    Activity.last_n_days(DAYS_TO_GRAPH).ordered
-  end
-
-  def self.activity_by_day
-    activity_to_graph.group_by { |s| s.start_time.to_date }
-  end
-
-  def self.total_by_day
-    activity_by_day.inject({}) do |h, (date, records)| 
-      h[date.to_date] = records.map { |r| r.duration }.sum.round(2); h
-    end
-  end
-
-  def self.graph_total_by_day
-    empty_days_to_graph.merge(total_by_day)
-  end
-
-# monthly stats
-
-  def self.activity_by_month
-    Activity.last_n_months(MONTHS_TO_GRAPH).group_by { |s| s.start_time.beginning_of_month }
-  end
-
-  def self.average_by_month
-    activity_time_by_month = activity_by_month.inject({}) do |h, (date, records)| 
-      h[date.to_date] = (records.map { |r| r.duration }.sum / 30).round(2); h
-    end
-    empty_months_to_graph.merge(activity_time_by_month)
-  end
-
-# yearly stats
-
-  def self.activity_by_year
-    activity_to_graph.group_by{|t| t.start_time.year}
-  end
-
-  def self.activity_by_year_month
-    activity_by_year = self.activity_by_year
-    activity_by_year.merge(activity_by_year){|y, ts| ts.group_by{|t| t.start_time.month}}
-  end
-
-private
-
-  def self.empty_days_to_graph
-    ((Date.today - DAYS_TO_GRAPH) .. Date.today).inject({}) { |h, d| h[d] = 0; h }
-  end
-
-  def self.empty_months_to_graph
-    (0...MONTHS_TO_GRAPH).to_a.reverse.inject({}) { |h, m_ago| h[(Date.today - m_ago.months).beginning_of_month] = 0; h }
-  end
-
+ private
+ 
   def run?
     activity_type == 'RUN'
   end
 
   def normalize(graph_data)
     return [] unless graph_data
-    reduce(
-      fix_zeroes(
-        graph_data.map {|p| p.to_i} ))
+    reduce( fix_zeroes( graph_data.map {|p| p.to_i} ) )
   end
 
   def fix_zeroes(graph_data)
