@@ -19,7 +19,7 @@ Installation
 
 1. Clone this repository.
 
-    git clone https://github.com/brandur/dorian.git
+    git clone https://github.com/skryl/skryl.git
 
 2. From the new directory, bundle the project's dependencies with `bundle install --path .`.
 
