@@ -7,9 +7,9 @@ GIT
 
 GIT
   remote: git://github.com/skryl/nike.git
-  revision: e9d571251c015a26961338d0ac6ffbd0e01b81a0
+  revision: e14f6a2822f91b297f6c8809730911a7f919e108
   specs:
-    nike (0.2.2)
+    nike (0.2.5)
       activesupport (>= 3.2.0)
       hashie (>= 1.2.0)
 
@@ -68,7 +68,7 @@ GEM
     httparty (0.8.3)
       multi_json (~> 1.0)
       multi_xml
-    i18n (0.6.0)
+    i18n (0.6.1)
     journey (1.0.4)
     jquery-rails (2.0.2)
       railties (>= 3.2.0, < 5.0)
