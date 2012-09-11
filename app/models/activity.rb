@@ -13,11 +13,16 @@ class Activity < ActiveRecord::Base
   set_months_to_graph 6
   set_average_range 30
 
-  RUN_REDUCE_FACTOR = 4
+  GPS_INTERVAL = 10.seconds
+  HR_INTERVAL = 10.seconds
+
+  RUN_REDUCE_FACTOR = 2
   RUN_DY_CUTOFF = 7
 
   HR_REDUCE_FACTOR = 2
   HR_DY_CUTOFF = 30
+
+  KPH_TO_MPH = 0.621
 
   def self.new_from_api_response(response)
     return unless response
@@ -54,7 +59,7 @@ class Activity < ActiveRecord::Base
 
   def self.parse_speed_data(response)
     speed_data = response.history.detect { |h| h.type == 'SPEED' }
-    speed_data['values'] if speed_data
+    speed_data['values'].map { |kph| kph * KPH_TO_MPH } if speed_data
   end
 
 # breakdown graphs
@@ -65,7 +70,8 @@ class Activity < ActiveRecord::Base
 
   def graph_categories
     reduce_factor = (run? ? RUN_REDUCE_FACTOR : HR_REDUCE_FACTOR)
-    @categories ||= graph_data.map.with_index { |p, i| (start_time + i * (reduce_factor * 10.seconds)).strftime("%I:%M %p") }
+    data_interval = (run? ? GPS_INTERVAL : HR_INTERVAL)
+    @categories ||= graph_data.map.with_index { |p, i| (start_time_fixed + i * (reduce_factor * data_interval)).strftime("%I:%M %p") }
   end
 
  private
@@ -102,5 +108,12 @@ class Activity < ActiveRecord::Base
     graph_data.each_slice(reduce_factor) { |s| data << (s.sum/s.size) }
     data
   end
+
+  # Time is synced incorrectly on the sportband for some reason
+  #
+  def start_time_fixed
+    start_time - (run? ? 0 : (start_time.isdst ? 1.hours : 1))
+  end
+
 
 end
