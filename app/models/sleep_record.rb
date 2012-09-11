@@ -8,6 +8,7 @@ class SleepRecord < ActiveRecord::Base
                    'DEEP'      => 1 }
 
   set_start_time_field :bed_time
+  set_end_time_field :rise_time
   set_duration_field :total_z_in_hours
   set_days_to_graph 30
   set_detailed_days_to_graph 10

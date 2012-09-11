@@ -1,33 +1,45 @@
 .chart#sleep_chart
 - content_for(:javascript) do
   javascript:
-    var sleepChartCategories = [#{@sleep_count.map{|k, v| "'#{defined?(is_compact) && is_compact ? k.strftime("%b \\'%y") : k.strftime("%b %d") }'"}.join(', ')}];
+    var sleepChartCategories = [#{@sleep_count.map{|k, v| "'#{ k.strftime("%b %d") }'"}.join(', ')}];
     var sleepChartData       = [#{@sleep_count.map{|k, v| v}.join(', ')}];
-    var sleepChartTitle      = "#{defined?(is_compact) && is_compact ? 'Daily Average by Month' : 'Total by Day'}";
-    var sleepCountStep       = #{defined?(is_compact) && is_compact ? 1 : 2};
-    var sleepChartType       = "#{defined?(is_compact) && is_compact ?  'areaspline' : 'line'}"; 
+    var sleepChartWakeupData = [#{@wakeup_time.map{|k, v| v}.join(', ')}];
 
   coffee:
     $ ->
        chart = new Highcharts.Chart
           chart:
             renderTo: 'sleep_chart'
-            defaultSeriesType: sleepChartType
           title:
-            text: sleepChartTitle
+            text: "Total Sleep and Wakeup Time"
           xAxis:
             categories: sleepChartCategories
             labels:
               rotation: -45
               align: 'right'
-              step: sleepCountStep
-          yAxis:
-            min: 0
-            title:
-              text: null
+              step: 2
+          yAxis: [
+            {
+              labels: { enabled: false }
+              minorGridLineWidth: 0
+              gridLineWidth: 0
+              min: 0
+              title:
+                text: null
+            },
+            {
+              labels: { enabled: false }
+              minorGridLineWidth: 0
+              gridLineWidth: 0
+              min: 0
+              opposite: true
+              title:
+                text: null
+            } ]
           tooltip:
             formatter: ->
-              this.y + (if this.y != 1 then ' hours' else ' hour') + ' in ' + this.x
+              (if this.series.name == 'sleep' then (this.y + ' hours') else (Math.floor(this.y) + ':' + Math.floor(this.y * 60 % 60) + 'am')) + ' on ' + this.x
           series: [
-            { name: 'hours', data: sleepChartData }
+            { name: 'sleep', data: sleepChartData, type: 'spline'},
+            { name: 'wakeup', data: sleepChartWakeupData, yAxis: 1, type: 'spline', lineWidth: 1, dashStyle: 'Dash', states: { hover: { lineWidth: 2 } } }
           ]

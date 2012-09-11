@@ -8,6 +8,10 @@ module GraphStats
     # scope :enough_data, where('length(sleep_graph) > 25')
   end
 
+  def set_end_time_field(field)
+    @end_time_field = field
+  end
+
   def set_duration_field(field)
     @duration_field = field
   end
@@ -58,6 +62,28 @@ module GraphStats
 
   def graph_total_by_day
     empty_days_to_graph.merge(total_by_day)
+  end
+
+  def start_time_by_day
+    activity_by_day.inject({}) do |h, (date, records)| 
+      start_time = records.first.send(@start_time_field); h
+      h[date.to_date] = (start_time.hour + start_time.min / 60.0).round(2); h
+    end
+  end
+
+  def graph_start_time_by_day
+    empty_days_to_graph.merge(start_time_by_day)
+  end
+
+  def end_time_by_day
+    activity_by_day.inject({}) do |h, (date, records)| 
+      end_time = records.first.send(@end_time_field); h
+      h[date.to_date] = (end_time.hour + end_time.min / 60.0).round(2); h
+    end
+  end
+
+  def graph_end_time_by_day
+    empty_days_to_graph.merge(end_time_by_day)
   end
 
 # monthly stats
