@@ -2,7 +2,7 @@ module GraphStats
   
   def set_start_time_field(field)
     @start_time_field = field
-    scope :ordered, order("#{field} DESC")
+    scope :ordered, order("#{field} ASC")
     scope :last_n_days, lambda { |n| where("#{field} > ?", (Date.today - n)) }
     scope :last_n_months, lambda { |n| where("#{field} > ?", (Date.today.end_of_month - (n-1).months)) }
     # scope :enough_data, where('length(sleep_graph) > 25')
@@ -116,8 +116,10 @@ module GraphStats
 
 private
 
+  # subtract one to account for potential shift
+  #
   def empty_days_to_graph
-    ((Date.today - @days_to_graph) .. Date.today).inject({}) { |h, d| h[d] = @default_daily_value || 0; h }
+    ((Date.today - @days_to_graph - 1) .. Date.today).inject({}) { |h, d| h[d] = @default_daily_value || 0; h }
   end
 
   def empty_months_to_graph

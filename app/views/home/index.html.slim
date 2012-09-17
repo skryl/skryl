@@ -15,7 +15,7 @@
     p My name is #{link_to 'Alex', 'http://skryl.org'}. I'm a software engineer living in Chicago and this is my personal data aggregator. It is here to remind me where I have been and to prepare me for where I am going. Feel free to check out my #{link_to 'Resume', 'http://careers.stackoverflow.com/skryl'} or drop me a line at #{link_to 'aleksey.skryl@gmail.com', 'mailto:aleksey.skryl@gmail.com'}.
 
   .col_6.last#articles
-    h2= link_to 'Articles', :articles
+    h2= link_to 'Writing', :articles
     p I #{link_to 'blog', :articles} about technology and other interesting things. Here are the latest articles that I've written:
     ul
       - @articles.each do |a|

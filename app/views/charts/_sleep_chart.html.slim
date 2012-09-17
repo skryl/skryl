@@ -38,7 +38,7 @@
             } ]
           tooltip:
             formatter: ->
-              (if this.series.name == 'sleep' then (this.y + ' hours') else (Math.floor(this.y) + ':' + Math.floor(this.y * 60 % 60) + 'am')) + ' on ' + this.x
+              (if this.series.name == 'sleep' then (this.y + ' hours') else (Math.floor(this.y) + ':' + ('0' + Math.floor(this.y * 60 % 60)).slice(-2) + 'am') + ' on ' + this.x)
           series: [
             { name: 'sleep', data: sleepChartData, type: 'spline'},
             { name: 'wakeup', data: sleepChartWakeupData, yAxis: 1, type: 'spline', lineWidth: 1, dashStyle: 'Dash', states: { hover: { lineWidth: 2 } } }
