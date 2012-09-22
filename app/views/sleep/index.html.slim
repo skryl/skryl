@@ -15,17 +15,17 @@ p I track my sleep patterns using the #{link_to 'MyZeo', 'http://www.myzeo.com/s
 .row
   .col_1
     ul.section_list
-      - @sleep_by_year_month.each do |year, sleep_by_month|
+      - @sleep_by_year_month.reverse_each do |year, sleep_by_month|
         li
           = link_to year, "#year_#{year}"
           ul
-            - sleep_by_month.each do |month, tweet|
+            - sleep_by_month.reverse_each do |month, tweet|
               li= link_to month_name(month), "#month_#{year}_#{month}"
   .col_11.last
-    - @sleep_by_year_month.each do |year, sleep_by_month|
+    - @sleep_by_year_month.reverse_each do |year, sleep_by_month|
       h2 id="year_#{year}"= year
       .sleep_year
-        - sleep_by_month.each do |month, sleep|
+        - sleep_by_month.reverse_each do |month, sleep|
           / No top margin for the first month in each year for a cleaner look
           - extra = month == sleep_by_month.keys.first ? 'top' : ''
           - sleep.sort!{|t1, t2| t2.bed_time <=> t1.bed_time}.each do |s|

@@ -14,6 +14,7 @@ class SleepRecord < ActiveRecord::Base
   set_detailed_days_to_graph 10
   set_months_to_graph 6
   set_default_monthly_value 8
+  set_shift_max 1
   set_shift_proc lambda { |s| ((s.bed_time - s.bed_time.beginning_of_day) < (s.bed_time.end_of_day - s.bed_time) ? -1.days : 0) }
 
 

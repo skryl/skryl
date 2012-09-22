@@ -15,17 +15,17 @@ p I track my physical activity using the #{link_to 'Nike+', 'http://nikeplus.nik
 .row
   .col_1
     ul.section_list
-      - @activity_by_year_month.each do |year, activity_by_month|
+      - @activity_by_year_month.reverse_each do |year, activity_by_month|
         li
           = link_to year, "#year_#{year}"
           ul
-            - activity_by_month.each do |month, tweet|
+            - activity_by_month.reverse_each do |month, tweet|
               li= link_to month_name(month), "#month_#{year}_#{month}"
   .col_11.last
-    - @activity_by_year_month.each do |year, activity_by_month|
+    - @activity_by_year_month.reverse_each do |year, activity_by_month|
       h2 id="year_#{year}"= year
       .activity_year
-        - activity_by_month.each do |month, activity|
+        - activity_by_month.reverse_each do |month, activity|
           / No top margin for the first month in each year for a cleaner look
           - extra = month == activity_by_month.keys.first ? 'top' : ''
           - activity.sort!{|t1, t2| t2.start_time <=> t1.start_time}.each do |a|

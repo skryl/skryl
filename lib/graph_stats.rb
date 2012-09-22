@@ -44,6 +44,10 @@ module GraphStats
     @shift_proc = p
   end
 
+  def set_shift_max(s)
+    @shift_max = s
+  end
+
 # daily stats
 
   def activity_to_graph
@@ -51,7 +55,7 @@ module GraphStats
   end
 
   def activity_by_day
-    shift activity_to_graph.group_by { |s| s.send(@start_time_field).to_date }
+    day_shift activity_to_graph.group_by { |s| s.send(@start_time_field).to_date }
   end
 
   def total_by_day
@@ -111,7 +115,7 @@ module GraphStats
 
   def activity_by_year_month
     activity_by_year = self.activity_by_year
-    activity_by_year.merge(activity_by_year){ |y, ts| ts.group_by { |s| s.send(@start_time_field).month } }
+    activity_by_year.merge(activity_by_year){ |y, ts| ts.group_by { |s| s.send(@start_time_field).month }}
   end
 
 private
@@ -119,14 +123,14 @@ private
   # subtract one to account for potential shift
   #
   def empty_days_to_graph
-    ((Date.today - @days_to_graph - 1) .. Date.today).inject({}) { |h, d| h[d] = @default_daily_value || 0; h }
+    ((Date.today - @days_to_graph - (@shift_max || 0) - 1) .. Date.today).inject({}) { |h, d| h[d] = @default_daily_value || 0; h }
   end
 
   def empty_months_to_graph
     (0...@months_to_graph).to_a.reverse.inject({}) { |h, m_ago| h[(Date.today - m_ago.months).beginning_of_month] = @default_monthly_value || 0; h }
   end
 
-  def shift(activity_by_day)
+  def day_shift(activity_by_day)
     return activity_by_day unless @shift_proc
     h = Hash.new {|h,k| h[k] = []}
     activity_by_day.inject(h) { |h, (k,v)| v.each { |i| h[k + @shift_proc[i]] << i }; h }
