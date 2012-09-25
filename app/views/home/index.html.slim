@@ -12,11 +12,11 @@
 .row
   .col_6#about
     h2 About
-    p My name is #{link_to 'Alex', 'http://skryl.org'}. I'm a software engineer living in Chicago and this is my personal data aggregator. It helps me remember where I have been and prepares me for where I am going. Feel free to check out my #{link_to 'resume', 'http://careers.stackoverflow.com/skryl'} or drop me a line at #{link_to 'aleksey.skryl@gmail.com', 'mailto:aleksey.skryl@gmail.com'}.
+    p My name is #{link_to 'Alex', 'http://skryl.org'}. I'm a software engineer; and this is my personal data aggregator. It's a life dashboard of sorts and I use it to track my successes and explain my failures. Feel free to drop me a line at #{link_to 'aleksey.skryl@gmail.com', 'mailto:aleksey.skryl@gmail.com'} or check out my #{link_to 'resume', 'http://careers.stackoverflow.com/skryl'}. 
 
   .col_6.last#articles
     h2= link_to 'Writing', :articles
-    p I #{link_to 'blog', :articles} about technology and other interesting things. Here are the latest articles that I've written:
+    p I #{link_to 'write', :articles} about technology and other interesting things. Here are my latest articles:
     ul
       - @articles.each do |a|
         li
@@ -28,14 +28,14 @@
   .col_6#books
     h2= link_to 'Books', :books
     p
-      | #{link_to('My entire reading history and notes', :books) + " are available online. "} 
+      | #{link_to('My entire reading history', :books)} and #{link_to('notes', 'https://www.evernote.com/pub/rut216/quotesnotes') + " are available online. "} 
       - if @book
         | The most recent book that I read was <em>#{@book.title}</em> by #{@book.author}.
     = render :partial => 'charts/books_chart'
 
   .col_6.last#projects
     h2= link_to 'Projects', "https://github.com/skryl"
-    p These are the #{link_to 'open source projects', "https://github.com/skryl"} that I'm currently working on:
+    p These are the open source #{link_to 'projects', "https://github.com/skryl"} that I'm currently working on:
     ul
       li #{link_to 'nike', 'https://github.com/skryl/nike'} &mdash; A REST Client for the Nike+ API.
       li #{link_to 'polly', 'https://github.com/skryl/polly'} &mdash; A DSL for working with functional symbolic expressions in Ruby.
