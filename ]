@@ -28,15 +28,15 @@
             alternateGridColor: null,
             labels: { style: { color: '#4572A7' } }, 
             plotBands: [
-              { from: 0, to: 12, color: 'rgba(0, 0, 0, 0)', label: { text: '', style: { color: '#606060' } } }, 
-              { from: 13, to: 25, color: 'rgba(0, 0, 0, 0.04)', label: { text: '', style: { color: '#606060' } } }, 
-              { from: 26, to: 38, color: 'rgba(0, 0, 0, 0)', label: { text: '', style: { color: '#606060' } } }, 
-              { from: 39, to: 50, color: 'rgba(0, 0, 0, 0.04)', label: { text: '', style: { color: '#606060' } } }
+              { from: 0, to: 25, color: 'rgba(0, 0, 0, 0)', label: { text: '', style: { color: '#606060' } } }, 
+              { from: 26, to: 50, color: 'rgba(0, 0, 0, 0.04)', label: { text: '', style: { color: '#606060' } } }, 
+              { from: 51, to: 75, color: 'rgba(0, 0, 0, 0)', label: { text: '', style: { color: '#606060' } } }, 
+              { from: 76, to: 100, color: 'rgba(0, 0, 0, 0.04)', label: { text: '', style: { color: '#606060' } } }
             ] 
           },
           { 
-            min: 7.5, 
-            max: 8.5, 
+            min: 7, 
+            max: 9, 
             tickInterval: 0.5,
             opposite: true, 
             title: { text: '' }, 
@@ -49,7 +49,7 @@
             formatter: -> 
               this.y + (if this.series.name == 'Sleep' then ' hours' else ' minutes') + ' in ' + this.x 
           series: [
-            { name: 'Exercise', data: exerciseChartData, type: 'spline', lineWidth: 1 },
-            { name: 'Sleep', data: sleepChartData, yAxis: 1, type: 'spline', lineWidth: 1 }
+            { name: 'Exercise', data: exerciseChartData, type: 'areaspline' },
+            { name: 'Sleep', data: sleepChartData, yAxis: 1, type: 'spline', lineWidth: 1, dashStyle: 'Dash' }
           ]
 
