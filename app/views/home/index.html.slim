@@ -28,7 +28,7 @@
   .col_6#books
     h2= link_to 'Books', :books
     p
-      | #{link_to('My entire reading history', :books)} and #{link_to('notes', 'https://www.evernote.com/pub/rut216/quotesnotes') + " are available online. "} 
+      | #{link_to('My entire reading history', :books)} and #{link_to('notes', 'https://www.evernote.com/pub/rut216/books') + " are available online. "} 
       - if @book
         | The most recent book that I read was <em>#{@book.title}</em> by #{@book.author}.
     = render :partial => 'charts/books_chart'
