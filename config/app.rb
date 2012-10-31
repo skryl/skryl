@@ -12,7 +12,7 @@ class App < Configurable # :nodoc:
   config.display_name = 'Aleksey Skryl'
 
   for_module(:blog) do |mod|
-    mod.atom = [ 'http://thoughts.skryl.org/rss' ]
+    mod.atom = [ 'http://thoughts.skryl.org/rss', 'http://fiction.skryl.org/rss' ]
   end
 
   for_module(:github) do |mod|
