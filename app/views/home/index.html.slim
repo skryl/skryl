@@ -12,7 +12,7 @@
 .row
   .col_6#about
     h2 About
-    p My name is #{link_to 'Alex', 'http://skryl.org'}. I'm a software engineer; and this is my personal data aggregator. It's a life dashboard of sorts and I use it to track my successes and explain my failures. Feel free to drop me a line at #{link_to 'aleksey.skryl@gmail.com', 'mailto:aleksey.skryl@gmail.com'} or check out my #{link_to 'resume', 'http://careers.stackoverflow.com/skryl'}. 
+    p My name is #{link_to 'Alex', 'http://skryl.org'}, and this is my personal data aggregator. I use it as a life dashboard of sorts in order to track my successes and explain my failures. Feel free to drop me a line at #{link_to 'aleksey.skryl@gmail.com', 'mailto:aleksey.skryl@gmail.com'} or check out my #{link_to 'resume', 'http://careers.stackoverflow.com/skryl'}. 
 
   .col_6.last#articles
     h2= link_to 'Writing', :articles
@@ -37,13 +37,14 @@
     h2= link_to 'Projects', "https://github.com/skryl"
     p These are the open source #{link_to 'projects', "https://github.com/skryl"} that I'm currently working on:
     ul
+      li #{link_to 'capybara-repl', 'https://github.com/skryl/capybara-repl'} &mdash; A Capybara based front-end scripting REPL environment.
       li #{link_to 'nike', 'https://github.com/skryl/nike'} &mdash; A REST Client for the Nike+ API.
       li #{link_to 'polly', 'https://github.com/skryl/polly'} &mdash; A DSL for working with functional symbolic expressions in Ruby.
       li #{link_to 'heroku_db_env', 'https://github.com/skryl/heroku_db_env'} &mdash; Overwrite Heroku's auto-generated database configuration.
       li #{link_to 'pg_schema', 'https://github.com/skryl/pg_schema'} &mdash; Simple schema support for the Rails pg adapter.
       li #{link_to 'automata', 'https://github.com/skryl/automata'} &mdash; An n-Dimensional cellular automata simulation and evolution framework.
       li #{link_to 'qbwc', 'https://github.com/skryl/qbwc'} &mdash; A Rails gem for interfacing with Intuit's Quickbooks Web Connector.
-      li #{link_to 'quickbooks_api', 'https://github.com/skryl/quickbooks_api'} &mdash; A Ruby wrapper for Intuit's Quickbooks XML API.
+      li #{link_to 'qbxml', 'https://github.com/skryl/qbxm'} &mdash; A Quickbooks XML Parser and validation tool.
       li #{link_to 'config_logic', 'https://github.com/skryl/config_logic'} &mdash; Intuitive configuration managment for Ruby and Rails projects.
       li #{link_to 'fuzzy_notes', 'https://github.com/skryl/fuzzy_notes'} &mdash; A CLI note manager with fuzzy search, encryption, and Evernote sync.
 
