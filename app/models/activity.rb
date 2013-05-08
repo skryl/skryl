@@ -30,16 +30,12 @@ class Activity < ActiveRecord::Base
     activity_attributes = {
       activity_id:         response.activity_id,
       activity_type:       response.activity_type,
-      start_time:          response.start_time_utc,
+      start_time:          response.start_time,
+      duration:            response.metric_summary.duration,
+      distance:            response.metric_summary.distance, 
+      calories:            response.metric_summary.calories,  
       status:              response.status,
-      gps:                 response.gps,
-      latitude:            response.latitude,
-      longitude:           response.longitude,
-      heartrate:           response.heartrate,
       device_type:         response.device_type,
-      duration:            response.duration_in_minutes,
-      distance:            response.distance_in_miles,
-      calories:            response.calories,
       gps_data:            parse_gps_data(response),
       hr_data:             parse_hr_data(response),
       speed_data:          parse_speed_data(response)
@@ -48,18 +44,19 @@ class Activity < ActiveRecord::Base
     new(activity_attributes)
   end
 
+  # FIXME (need v2 api support)
   def self.parse_gps_data(response)
-    response.geo.waypoints if response.geo
+    # response.geo.waypoints if response.geo
   end
 
   def self.parse_hr_data(response)
-    hr_data = response.history.detect { |h| h.type == 'HEARTRATE' }
+    hr_data = response.metrics.detect { |h| h.metric_type == 'HEARTRATE' }
     hr_data['values'] if hr_data
   end
 
   def self.parse_speed_data(response)
-    speed_data = response.history.detect { |h| h.type == 'SPEED' }
-    speed_data['values'].map { |kph| kph * KPH_TO_MPH } if speed_data
+    speed_data = response.metrics.detect { |h| h.metric_type == 'SPEED' }
+    speed_data['values'].map { |kph| kph.to_i * KPH_TO_MPH } if speed_data
   end
 
 # breakdown graphs

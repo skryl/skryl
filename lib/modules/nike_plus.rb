@@ -5,7 +5,7 @@ class NikePlus < ModuleBase
   def update
     num_updates = 0
     client = config.nike_client
-    activities = client.activities(type: :run) + client.activities(type: :hr)
+    activities = client.activities
 
     activities.each do |a|
       unless Activity.find_by_activity_id(a.activity_id)
