@@ -1,7 +1,7 @@
 - content_for(:title) do
   | #{App.full_name}
 - content_for(:fonts) do
-  link href='http://fonts.googleapis.com/css?family=Raleway:100|&amp;subset=latin' rel='stylesheet' type='text/css' 
+  link href='http://fonts.googleapis.com/css?family=Raleway:100|&amp;subset=latin' rel='stylesheet' type='text/css'
 
 .row
   .col_12.last#header
@@ -12,7 +12,7 @@
 .row
   .col_6#about
     h2 About
-    p My name is #{link_to 'Alex', 'http://skryl.org'}, I am a freelance software engineer currently living in Chicago, and this is my personal data aggregator. It helps me set better goals and track my progress as I stumble along the path to enlightenment. Feel free to drop me a line at #{link_to 'aleksey.skryl@gmail.com', 'mailto:aleksey.skryl@gmail.com'} or check out my #{link_to 'resume', 'http://careers.stackoverflow.com/skryl'}.  
+    p My name is #{link_to 'Alex', 'http://skryl.org'}, I am a freelance software engineer currently living in Chicago, and this is my personal data aggregator. It helps me set better goals and track my progress as I stumble along the path to enlightenment. Feel free to drop me a line at #{link_to 'aleksey.skryl@gmail.com', 'mailto:aleksey.skryl@gmail.com'} or check out my #{link_to 'resume', 'http://careers.stackoverflow.com/skryl'}.
   .col_6.last#articles
     h2= link_to 'Writing', :articles
     p I #{link_to 'write', :articles} fiction and blog once in a while. Here is my latest writing:
@@ -27,7 +27,7 @@
   .col_6#books
     h2= link_to 'Books', :books
     p
-      | #{link_to('My entire reading history', :books)} and #{link_to('notes', 'https://www.evernote.com/pub/rut216/books') + " are available online. "} 
+      | #{link_to('My entire reading history', :books)} and #{link_to('notes', 'https://www.evernote.com/pub/rut216/books') + " are available online. "}
       - if @book
         | The most recent book that I read was <em>#{@book.title}</em> by #{@book.author}.
     = render :partial => 'charts/books_chart'
@@ -72,12 +72,11 @@
           span.meta= link_to distance_of_time_in_words(a.published_at.getlocal, Time.now, true), a.permalink
     p= link_to "See my Github profile", 'https://github.com/skryl'
 
-.row
-
-  .col_12#Physical
-    h2 #{link_to 'Sleep', :sleep} + #{link_to 'Exercise', :exercise}
-    p I track my #{link_to 'sleep', :sleep} and #{link_to 'exercise', :exercise} to improve my physical and mental performance.
-    = render :partial => 'charts/sleep_exercise_chart', :locals => { :is_compact => true }
+/*.row*/
+  /*.col_12#Physical*/
+  /*  h2 #{link_to 'Sleep', :sleep} + #{link_to 'Exercise', :exercise}*/
+  /*  p I track my #{link_to 'sleep', :sleep} and #{link_to 'exercise', :exercise} to improve my physical and mental performance.*/
+  /*  = render :partial => 'charts/sleep_exercise_chart', :locals => { :is_compact => true }*/
 
   /* .col_6#Sleep*/
   /*   h2= link_to 'Sleep', :sleep*/
@@ -90,16 +89,16 @@
   /*   = render :partial => 'charts/exercise_chart', :locals => { :is_compact => true }*/
 
 
-/* .row*/
-/*   .col_6#photos*/
-/*     h2 Photos*/
-/*     ul.photos*/
-/*       - @photos.each do |p|*/
-/*         li*/
-/*           a href=p.permalink*/
-/*             img src=p.thumbnail_url*/
-/*     .clear*/
-/*     p placeholder
+  /* .row*/
+  /*   .col_6#photos*/
+  /*     h2 Photos*/
+  /*     ul.photos*/
+  /*       - @photos.each do |p|*/
+  /*         li*/
+  /*           a href=p.permalink*/
+  /*             img src=p.thumbnail_url*/
+  /*     .clear*/
+  /*     p placeholder
 
 .row
   .col_12.last
