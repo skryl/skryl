@@ -37,6 +37,7 @@ group :development, :test do
 end
 
 group :production do
+  gem 'memcachier'
   gem 'dalli'
   gem 'pg'
   gem 'thin'
