@@ -12,7 +12,7 @@ gem 'jquery-rails'
 gem 'libxml-ruby'
 gem 'sass'
 gem 'slim'
-gem 'gon'
+gem 'gon', '3.0.5'
 gem 'uglifier'
 gem 'whenever', :require => false
 gem 'my_zeo', :github => "skryl/my_zeo"

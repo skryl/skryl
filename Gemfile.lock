@@ -60,7 +60,7 @@ GEM
     erubis (2.7.0)
     eventmachine (1.0.3)
     execjs (2.0.2)
-    gon (5.0.0)
+    gon (3.0.5)
       actionpack (>= 2.3.0)
       json
     hashie (2.0.5)
@@ -164,7 +164,7 @@ DEPENDENCIES
   app
   coffee-script
   dalli
-  gon
+  gon (= 3.0.5)
   jquery-rails
   libxml-ruby
   memcachier
