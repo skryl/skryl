@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120813220525) do
+ActiveRecord::Schema.define(:version => 20131228020342) do
 
   create_table "activities", :force => true do |t|
     t.datetime "created_at",    :null => false
@@ -68,33 +68,6 @@ ActiveRecord::Schema.define(:version => 20120813220525) do
     t.text     "content"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
-  end
-
-  create_table "sleep_records", :force => true do |t|
-    t.datetime "created_at",                              :null => false
-    t.datetime "updated_at",                              :null => false
-    t.datetime "bed_time",                                :null => false
-    t.datetime "rise_time",                               :null => false
-    t.date     "start_date",                              :null => false
-    t.integer  "awakenings",                              :null => false
-    t.integer  "awakenings_zq_points",                    :null => false
-    t.integer  "time_in_deep",                            :null => false
-    t.integer  "time_in_deep_percentage",                 :null => false
-    t.integer  "time_in_deep_zq_points",                  :null => false
-    t.integer  "time_in_light",                           :null => false
-    t.integer  "time_in_light_percentage",                :null => false
-    t.integer  "time_in_rem",                             :null => false
-    t.integer  "time_in_rem_percentage",                  :null => false
-    t.integer  "time_in_rem_zq_points",                   :null => false
-    t.integer  "time_in_wake",                            :null => false
-    t.integer  "time_in_wake_percentage",                 :null => false
-    t.integer  "time_in_wake_zq_points",                  :null => false
-    t.integer  "time_to_z",                               :null => false
-    t.integer  "total_z",                                 :null => false
-    t.integer  "total_z_zq_points",                       :null => false
-    t.integer  "zq",                                      :null => false
-    t.text     "sleep_graph",              :limit => 255, :null => false
-    t.string   "sleep_graph_start_time",                  :null => false
   end
 
   create_table "tweets", :force => true do |t|

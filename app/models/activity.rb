@@ -1,11 +1,12 @@
 class Activity < ActiveRecord::Base
   extend GraphStats
-  
+
   serialize :gps_data
   serialize :hr_data
   serialize :speed_data
 
-  validates_presence_of :activity_id, :activity_type, :start_time, :duration, :distance, :calories 
+  validates_presence_of :activity_id, :activity_type, :start_time, :duration, :distance, :calories
+  scope :past_year, where('start_time > ?', Time.now - 12.months)
 
   set_start_time_field :start_time
   set_duration_field :duration
@@ -32,8 +33,8 @@ class Activity < ActiveRecord::Base
       activity_type:       response.activity_type,
       start_time:          response.start_time,
       duration:            response.metric_summary.duration,
-      distance:            response.metric_summary.distance, 
-      calories:            response.metric_summary.calories,  
+      distance:            response.metric_summary.distance,
+      calories:            response.metric_summary.calories,
       status:              response.status,
       device_type:         response.device_type,
       gps_data:            parse_gps_data(response),
@@ -72,7 +73,7 @@ class Activity < ActiveRecord::Base
   end
 
  private
- 
+
   def run?
     activity_type == 'RUN'
   end

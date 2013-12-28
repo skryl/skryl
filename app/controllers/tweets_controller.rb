@@ -8,7 +8,8 @@ class TweetsController < ApplicationController
     @tweet_count_by_month = scope.order('published_at ASC').count_by{|t| t.published_at.beginning_of_month}
     @tweets_by_year = scope.ordered.group_by{|t| t.published_at.year}
     @tweets_by_year = @tweets_by_year.merge(@tweets_by_year){|y, ts| ts.group_by{|t| t.published_at.month}}
-    gon.tweetCountByMonthCategories = @tweet_count_by_month.map{|k, v| "'#{k.strftime("%b \\'%y")}'"}
+
+    gon.tweetCountByMonthCategories = @tweet_count_by_month.map{|k, v| k.strftime("%b '%y")}
     gon.tweetCountByMonthData       = @tweet_count_by_month.map{|k, v| v}
     gon.tweetCountByMonthStep       = defined?(is_compact) && is_compact ? 2 : 1
   end

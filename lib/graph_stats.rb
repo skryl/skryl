@@ -1,11 +1,10 @@
 module GraphStats
-  
+
   def set_start_time_field(field)
     @start_time_field = field
     scope :ordered, order("#{field} ASC")
     scope :last_n_days, lambda { |n| where("#{field} > ?", (Date.today - n)) }
     scope :last_n_months, lambda { |n| where("#{field} > ?", (Date.today.end_of_month - (n-1).months)) }
-    # scope :enough_data, where('length(sleep_graph) > 25')
   end
 
   def set_end_time_field(field)
@@ -59,7 +58,7 @@ module GraphStats
   end
 
   def total_by_day
-    activity_by_day.inject({}) do |h, (date, records)| 
+    activity_by_day.inject({}) do |h, (date, records)|
       h[date.to_date] = records.map { |r| r.send(@duration_field) }.sum.round(2); h
     end
   end
@@ -69,7 +68,7 @@ module GraphStats
   end
 
   def start_time_by_day
-    activity_by_day.inject({}) do |h, (date, records)| 
+    activity_by_day.inject({}) do |h, (date, records)|
       start_time = records.first.send(@start_time_field); h
       h[date.to_date] = (start_time.hour + start_time.min / 60.0).round(2); h
     end
@@ -80,7 +79,7 @@ module GraphStats
   end
 
   def end_time_by_day
-    activity_by_day.inject({}) do |h, (date, records)| 
+    activity_by_day.inject({}) do |h, (date, records)|
       end_time = records.first.send(@end_time_field); h
       h[date.to_date] = (end_time.hour + end_time.min / 60.0).round(2); h
     end
@@ -97,7 +96,7 @@ module GraphStats
   end
 
   def average_by_month
-    activity_time_by_month = activity_by_month.inject({}) do |h, (date, records)| 
+    activity_time_by_month = activity_by_month.inject({}) do |h, (date, records)|
       h[date.to_date] = (records.map { |r| r.send(@duration_field) }.sum / (@average_range || records.size)).round(2); h
     end
     empty_months_to_graph.merge(activity_time_by_month)

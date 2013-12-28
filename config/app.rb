@@ -32,4 +32,5 @@ class App < Configurable # :nodoc:
   for_module(:nike_plus) do |mod|
     mod.nike_client = Nike::Client.new(ENV['NIKE_TOKEN'])
   end
+
 end

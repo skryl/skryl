@@ -16,7 +16,6 @@ gem 'gon', '3.0.5'
 gem 'twitter'
 gem 'uglifier'
 gem 'whenever', :require => false
-gem 'my_zeo', :github => "skryl/my_zeo"
 gem 'nike', :github => "skryl/nike", branch: "v2"
 
 # Use unicorn as the web server
