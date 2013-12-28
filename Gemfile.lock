@@ -68,6 +68,9 @@ GEM
     http (0.5.0)
       http_parser.rb
     http_parser.rb (0.6.0)
+    httparty (0.12.0)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
     i18n (0.6.9)
     journey (1.0.4)
     jquery-rails (3.0.4)
@@ -84,6 +87,7 @@ GEM
     method_source (0.8.2)
     mime-types (1.25.1)
     multi_json (1.8.2)
+    multi_xml (0.5.5)
     multipart-post (1.2.0)
     newrelic_rpm (3.7.1.180)
     pg (0.17.1)
@@ -181,6 +185,7 @@ DEPENDENCIES
   coffee-script
   dalli
   gon (= 3.0.5)
+  httparty
   jquery-rails
   libxml-ruby
   memcachier
