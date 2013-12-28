@@ -9,5 +9,11 @@ class BooksController < ApplicationController
     @book_count_by_year = @books.count_by{|b| b.finished_at.beginning_of_year}
     @page_count_by_year = @books.group_by{|b| b.finished_at.beginning_of_year}
     @page_count_by_year.merge!(@page_count_by_year){|k, v| v.sum {|i| i.num_pages.to_i } }
+
+    gon.bookCountByYearData       = @book_count_by_year.map{|k, v| v}
+    gon.bookCountByYearCategories = @book_count_by_year.map{|k, v| k.strftime('%Y')}.map{ |d| "'#{d}'" }
+
+    gon.pageCountByYearCategories = @page_count_by_year.map{|k, v| k.strftime('%Y')}.map{ |d| "'#{d}'" }
+    gon.pageCountByYearData       = @page_count_by_year.map{|k, v| v}
   end
 end

@@ -1,10 +1,5 @@
 .chart#sleep_chart
 - content_for(:javascript) do
-  javascript:
-    var sleepChartCategories = [#{@sleep_count.map{|k, v| "'#{ k.strftime("%b %d") }'"}.join(', ')}];
-    var sleepChartData       = [#{@sleep_count.map{|k, v| v}.join(', ')}];
-    var sleepChartWakeupData = [#{@wakeup_time.map{|k, v| v}.join(', ')}];
-
   coffee:
     $ ->
        chart = new Highcharts.Chart
@@ -13,7 +8,7 @@
           title:
             text: "Total Sleep and Wakeup Time"
           xAxis:
-            categories: sleepChartCategories
+            categories: gon.sleepChartCategories
             labels:
               rotation: -45
               align: 'right'
@@ -42,6 +37,6 @@
             formatter: ->
               (if this.series.name == 'sleep' then (this.y + ' hours') else (Math.floor(this.y) + ':' + ('0' + Math.floor(this.y * 60 % 60)).slice(-2) + 'am') + ' on ' + this.x)
           series: [
-            { name: 'sleep', data: sleepChartData, type: 'spline'},
-            { name: 'wakeup', data: sleepChartWakeupData, yAxis: 1, type: 'spline', lineWidth: 1, dashStyle: 'Dash', states: { hover: { lineWidth: 2 } } }
+            { name: 'sleep', data: gon.sleepChartData, type: 'spline'},
+            { name: 'wakeup', data: gon.sleepChartWakeupData, yAxis: 1, type: 'spline', lineWidth: 1, dashStyle: 'Dash', states: { hover: { lineWidth: 2 } } }
           ]

@@ -1,11 +1,5 @@
 .chart#exercise_chart
 - content_for(:javascript) do
-  javascript:
-    var sleepChartCategories =    [#{@sleep_count.map{|k, v| "'#{k.strftime("%b \\'%y")}'"}.join(', ')}];
-    var sleepChartData          = [#{@sleep_count.map{|k, v| v}.join(', ')}];
-    var exerciseChartCategories = [#{@exercise_count.map{|k, v| "'#{k.strftime("%b \\'%y")}'"}.join(', ')}];
-    var exerciseChartData       = [#{@exercise_count.map{|k, v| v}.join(', ')}];
-
   coffee:
     $ ->
        chart = new Highcharts.Chart
@@ -14,42 +8,41 @@
           title:
             text: 'Daily Average by Month'
           xAxis:
-            categories: sleepChartCategories
+            categories: gon.exerciseChartCategories
             labels:
               rotation: -45
               align: 'right'
               step: 1
           yAxis: [ {
-            min: 0, 
-            max: 50, 
-            title: { text: '' },  
+            min: 0,
+            max: 50,
+            title: { text: '' },
             minorGridLineWidth: 0,
             gridLineWidth: 0,
             alternateGridColor: null,
-            labels: { style: { color: '#4572A7' } }, 
+            labels: { style: { color: '#4572A7' } },
             plotBands: [
-              { from: 0, to: 12, color: 'rgba(0, 0, 0, 0)', label: { text: '', style: { color: '#606060' } } }, 
-              { from: 13, to: 25, color: 'rgba(0, 0, 0, 0.04)', label: { text: '', style: { color: '#606060' } } }, 
-              { from: 26, to: 38, color: 'rgba(0, 0, 0, 0)', label: { text: '', style: { color: '#606060' } } }, 
+              { from: 0, to: 12, color: 'rgba(0, 0, 0, 0)', label: { text: '', style: { color: '#606060' } } },
+              { from: 13, to: 25, color: 'rgba(0, 0, 0, 0.04)', label: { text: '', style: { color: '#606060' } } },
+              { from: 26, to: 38, color: 'rgba(0, 0, 0, 0)', label: { text: '', style: { color: '#606060' } } },
               { from: 39, to: 50, color: 'rgba(0, 0, 0, 0.04)', label: { text: '', style: { color: '#606060' } } }
-            ] 
+            ]
           },
-          { 
-            min: 7.5, 
-            max: 8.5, 
+          {
+            min: 7.5,
+            max: 8.5,
             tickInterval: 0.5,
-            opposite: true, 
-            title: { text: '' }, 
+            opposite: true,
+            title: { text: '' },
             minorGridLineWidth: 0,
             gridLineWidth: 0,
             alternateGridColor: null,
             labels: { style: { color: '#AA4643' } },
           } ]
-          tooltip: 
-            formatter: -> 
-              this.y + (if this.series.name == 'Sleep' then ' hours' else ' minutes') + ' in ' + this.x 
+          tooltip:
+            formatter: ->
+              this.y + (if this.series.name == 'Sleep' then ' hours' else ' minutes') + ' in ' + this.x
           series: [
-            { name: 'Exercise', data: exerciseChartData, type: 'spline', lineWidth: 1 },
-            { name: 'Sleep', data: sleepChartData, yAxis: 1, type: 'spline', lineWidth: 1 }
+            { name: 'Exercise', data: gon.exerciseChartData, type: 'spline', lineWidth: 1 }
           ]
 

@@ -13,6 +13,7 @@ gem 'libxml-ruby'
 gem 'sass'
 gem 'slim'
 gem 'gon', '3.0.5'
+gem 'twitter'
 gem 'uglifier'
 gem 'whenever', :require => false
 gem 'my_zeo', :github => "skryl/my_zeo"

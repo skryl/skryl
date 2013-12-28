@@ -58,7 +58,7 @@
           = raw t.content_html
           = ' '
           span.meta= link_to distance_of_time_in_words(t.published_at.getlocal, Time.now, true), t.permalink
-    p= link_to "Every one of my #{pluralize(number_with_delimiter(@tweet_count), 'tweet')}", :twitter
+    p= link_to "Every one of my #{pluralize(number_with_delimiter(Tweet.count), 'tweet')}", :twitter
 
   .col_6.last#github
     h2= link_to 'GitHub', 'https://github.com/skryl'
@@ -72,21 +72,21 @@
           span.meta= link_to distance_of_time_in_words(a.published_at.getlocal, Time.now, true), a.permalink
     p= link_to "See my Github profile", 'https://github.com/skryl'
 
-/*.row*/
-  /*.col_12#Physical*/
-  /*  h2 #{link_to 'Sleep', :sleep} + #{link_to 'Exercise', :exercise}*/
-  /*  p I track my #{link_to 'sleep', :sleep} and #{link_to 'exercise', :exercise} to improve my physical and mental performance.*/
-  /*  = render :partial => 'charts/sleep_exercise_chart', :locals => { :is_compact => true }*/
+.row
+  .col_12#Physical
+    h2= link_to 'Exercise', :exercise
+    p I track my #{link_to 'exercise', :exercise} to improve my physical and mental performance.
+    = render :partial => 'charts/sleep_exercise_chart', :locals => { :is_compact => true }
 
-  /* .col_6#Sleep*/
-  /*   h2= link_to 'Sleep', :sleep*/
-  /*   p I track my #{link_to 'sleep', :sleep} in order to improve my mental performance.*/
-  /*   = render :partial => 'charts/sleep_chart', :locals => { :is_compact => true }*/
+  /*.col_6#Sleep*/
+  /*  h2= link_to 'Sleep', :sleep*/
+  /*  p I track my #{link_to 'sleep', :sleep} in order to improve my mental performance.*/
+  /*  = render :partial => 'charts/sleep_chart', :locals => { :is_compact => true }*/
 
-  /* .col_6.last#Exercise*/
-  /*   h2= link_to 'Exercise', :exercise*/
-  /*   p I track my #{link_to 'exercise', :exercise} to stay healthy.*/
-  /*   = render :partial => 'charts/exercise_chart', :locals => { :is_compact => true }*/
+  /*.col_6.last#Exercise*/
+  /*  h2= link_to 'Exercise', :exercise*/
+  /*  p I track my #{link_to 'exercise', :exercise} to stay healthy.*/
+  /*  = render :partial => 'charts/exercise_chart', :locals => { :is_compact => true }*/
 
 
   /* .row*/

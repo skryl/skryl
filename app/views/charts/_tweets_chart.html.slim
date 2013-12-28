@@ -1,10 +1,5 @@
 .chart#tweet_chart
 - content_for(:javascript) do
-  javascript:
-    var tweetCountByMonthCategories = [ #{@tweet_count_by_month.map{|k, v| "'#{k.strftime("%b \\'%y")}'"}.join(', ')} ];
-    var tweetCountByMonthData       = [ #{@tweet_count_by_month.map{|k, v| v}.join(', ')} ];
-    var tweetCountByMonthStep       = #{defined?(is_compact) && is_compact ? 2 : 1};
-
   coffee:
     $ ->
        chart = new Highcharts.Chart
@@ -14,11 +9,11 @@
           title:
             text: 'Tweets by Month'
           xAxis:
-            categories: tweetCountByMonthCategories
+            categories: gon.tweetCountByMonthCategories
             labels:
               rotation: -45
               align: 'right'
-              step: tweetCountByMonthStep
+              step: gon.tweetCountByMonthStep
           yAxis:
             min: 0
             title:
@@ -27,5 +22,5 @@
             formatter: ->
               this.y + (if this.y != 1 then ' tweets' else ' tweet') + ' in ' + this.x
           series: [
-            { name: 'Tweets', data: tweetCountByMonthData }
+            { name: 'Tweets', data: gon.tweetCountByMonthData }
           ]

@@ -1,10 +1,5 @@
 .chart#action_chart
 - content_for(:javascript) do
-  javascript:
-    var actionCountByMonthCategories = [ #{@action_count_by_month.map{|k, v| "'#{k.strftime("%b \\'%y")}'"}.join(', ')} ];
-    var actionCountByMonthData       = [ #{@action_count_by_month.map{|k, v| v}.join(', ')} ];
-    var actionCountByMonthStep       = #{defined?(is_compact) && is_compact ? 2 : 1};
-
   coffee:
     $ ->
        chart = new Highcharts.Chart
@@ -14,11 +9,11 @@
           title:
             text: 'GitHub Actions by Month'
           xAxis:
-            categories: actionCountByMonthCategories
+            categories: gon.actionCountByMonthCategories
             labels:
               rotation: -45
               align: 'right'
-              step: actionCountByMonthStep
+              step: gon.actionCountByMonthStep
           yAxis:
             min: 0
             title:
@@ -27,5 +22,5 @@
             formatter: ->
               this.y + (if this.y != 1 then ' actions' else ' action') + ' in ' + this.x;
           series: [
-            { name: 'Tweets', data: actionCountByMonthData }
+            { name: 'Tweets', data: gon.actionCountByMonthData }
           ]

@@ -25,13 +25,8 @@ class App < Configurable # :nodoc:
     mod.user_id = ENV['GOODREADS_ID']
   end
 
-  for_module(:twitter) do |mod|
+  for_module(:twitter_stream) do |mod|
     mod.user = '_skryl_'
-  end
-
-  for_module(:zeo) do |mod|
-    MyZeo.headers 'Referer' => 'http://skryl.org'
-    mod.zeo_client = MyZeo.new(ENV['ZEO_KEY'], :login => ENV['ZEO_LOGIN'], :password => ENV['ZEO_PASSWORD'])
   end
 
   for_module(:nike_plus) do |mod|

@@ -1,9 +1,5 @@
 .chart#article_chart
 - content_for(:javascript) do
-  javascript:
-    var articleCountByYearCategories = [ #{@article_count_by_year.map{|k, v| k.strftime('%Y')}.map{ |d| "'#{d}'" }.join(', ')} ];
-    var articleCountByYearData       = [ #{@article_count_by_year.map{|k, v| v}.join(', ')} ];
-
   coffee:
     $ ->
       chart = new Highcharts.Chart

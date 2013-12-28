@@ -1,9 +1,5 @@
 .chart#exercise_chart
 - content_for(:javascript) do
-  javascript:
-    var exerciseChartCategories = [#{@exercise_count.map{|k, v| "'#{k.strftime("%b %d")}'"}.join(', ')}];
-    var exerciseChartData       = [#{@exercise_count.map{|k, v| v}.join(', ')}];
-
   coffee:
     $ ->
        chart = new Highcharts.Chart
@@ -13,7 +9,7 @@
           title:
             text: 'Total by Day'
           xAxis:
-            categories: exerciseChartCategories
+            categories: gon.exerciseChartCategories
             labels:
               rotation: -45
               align: 'right'
@@ -27,5 +23,5 @@
             formatter: ->
               this.y + (if this.y != 1 then ' minutes' else ' minute') + ' in ' + this.x
           series: [
-            { name: 'minutes', data: exerciseChartData }
+            { name: 'minutes', data: gon.exerciseChartData }
           ]
