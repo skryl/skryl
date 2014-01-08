@@ -25,11 +25,11 @@ class Activity < ActiveRecord::Base
 
   KPH_TO_MPH = 0.621
 
-  def self.new_from_api_response(response)
-    return unless response
+  def self.new_from_api_response(id, response)
+    return unless id && response
 
     activity_attributes = {
-      activity_id:         response['_links']['self'].first['id'].to_s,
+      activity_id:         id,
       activity_type:       response['name'] == 'Treadmill' ? 'HEARTRATE' : 'RUN',
       start_time:          Time.parse(response['start_datetime']),
       duration:            response['aggregates']['elapsed_time_total']/60.0,
