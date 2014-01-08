@@ -15,7 +15,7 @@ class Activity < ActiveRecord::Base
   set_average_range 30
 
   GPS_INTERVAL = 10.seconds
-  HR_INTERVAL = 10.seconds
+  HR_INTERVAL = 1.seconds
 
   RUN_REDUCE_FACTOR = 2
   RUN_DY_CUTOFF = 7
@@ -29,14 +29,12 @@ class Activity < ActiveRecord::Base
     return unless response
 
     activity_attributes = {
-      activity_id:         response.activity_id,
-      activity_type:       response.activity_type,
-      start_time:          response.start_time,
-      duration:            response.metric_summary.duration,
-      distance:            response.metric_summary.distance,
-      calories:            response.metric_summary.calories,
-      status:              response.status,
-      device_type:         response.device_type,
+      activity_id:         response['_links']['self'].first['id'].to_s,
+      activity_type:       response['name'] == 'Treadmill' ? 'HEARTRATE' : 'RUN',
+      start_time:          Time.parse(response['start_datetime']),
+      duration:            response['aggregates']['elapsed_time_total']/60.0,
+      distance:            0,
+      calories:            0,
       gps_data:            parse_gps_data(response),
       hr_data:             parse_hr_data(response),
       speed_data:          parse_speed_data(response)
@@ -51,13 +49,13 @@ class Activity < ActiveRecord::Base
   end
 
   def self.parse_hr_data(response)
-    hr_data = response.metrics.detect { |h| h.metric_type == 'HEARTRATE' }
-    hr_data['values'] if hr_data
+    response['time_series']['heartrate'].map {|time, val| val}
   end
 
+  # FIXME
   def self.parse_speed_data(response)
-    speed_data = response.metrics.detect { |h| h.metric_type == 'SPEED' }
-    speed_data['values'].map { |kph| kph.to_i * KPH_TO_MPH } if speed_data
+    # speed_data = response.metrics.detect { |h| h.metric_type == 'SPEED' }
+    # speed_data['values'].map { |kph| kph.to_i * KPH_TO_MPH } if speed_data
   end
 
 # breakdown graphs

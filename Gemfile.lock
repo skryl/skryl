@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/skryl/mmf.git
+  revision: 03ed30d60def7ddfee5c963f6518575ad1172482
+  specs:
+    mmf (0.2.1)
+      oauth2
+
+GIT
   remote: git://github.com/skryl/nike.git
   revision: d2b7bc1eb43c01bd800d59c8629c00c2089ae82e
   branch: v2
@@ -71,12 +78,15 @@ GEM
     httparty (0.12.0)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
+    httpauth (0.2.0)
     i18n (0.6.9)
     journey (1.0.4)
     jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.8.1)
+    jwt (0.1.8)
+      multi_json (>= 1.5)
     libxml-ruby (2.7.0)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -90,6 +100,13 @@ GEM
     multi_xml (0.5.5)
     multipart-post (1.2.0)
     newrelic_rpm (3.7.1.180)
+    oauth2 (0.9.2)
+      faraday (~> 0.8)
+      httpauth (~> 0.2)
+      jwt (~> 0.1.4)
+      multi_json (~> 1.0)
+      multi_xml (~> 0.5)
+      rack (~> 1.2)
     pg (0.17.1)
     polyglot (0.3.3)
     pry (0.9.12.4)
@@ -189,6 +206,7 @@ DEPENDENCIES
   jquery-rails
   libxml-ruby
   memcachier
+  mmf!
   newrelic_rpm
   nike!
   pg

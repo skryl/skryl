@@ -18,6 +18,7 @@ gem 'uglifier'
 gem 'whenever', :require => false
 gem 'httparty'
 gem 'nike', :github => "skryl/nike", branch: "v2"
+gem 'mmf',  :github => "skryl/mmf"
 
 # Use unicorn as the web server
 # gem 'unicorn'

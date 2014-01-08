@@ -20,8 +20,8 @@ class App < Configurable # :nodoc:
   end
 
   for_module(:goodreads) do |mod|
-    mod.key     = ENV['GOODREADS_KEY']
     mod.shelf   = 'read'
+    mod.key     = ENV['GOODREADS_KEY']
     mod.user_id = ENV['GOODREADS_ID']
   end
 
@@ -29,8 +29,16 @@ class App < Configurable # :nodoc:
     mod.user = '_skryl_'
   end
 
-  for_module(:nike_plus) do |mod|
-    mod.nike_client = Nike::Client.new(ENV['NIKE_TOKEN'])
+  # for_module(:nike_plus) do |mod|
+  #   mod.nike_client = Nike::Client.new(ENV['NIKE_TOKEN'])
+  # end
+
+  for_module(:mapmyfitness) do |mod|
+    mod.mmf_client = Mmf::Client.new do |config|
+      config.client_key    = ENV['MMF_KEY']
+      config.client_secret = ENV['MMF_SECRET']
+      config.access_token  = ENV['MMF_TOKEN']
+    end
   end
 
 end
