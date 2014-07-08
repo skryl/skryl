@@ -14,16 +14,17 @@ class Activity < ActiveRecord::Base
   set_months_to_graph 6
   set_average_range 30
 
-  GPS_INTERVAL = 10.seconds
+  GPS_INTERVAL = 1.seconds
   HR_INTERVAL = 1.seconds
 
-  RUN_REDUCE_FACTOR = 2
-  RUN_DY_CUTOFF = 7
+  RUN_REDUCE_FACTOR = 10
+  RUN_DY_CUTOFF = 30
 
   HR_REDUCE_FACTOR = 2
   HR_DY_CUTOFF = 30
 
   KPH_TO_MPH = 0.621
+  MPS_TO_MPH = 2.237
 
   def self.new_from_api_response(id, response)
     return unless id && response
@@ -43,19 +44,19 @@ class Activity < ActiveRecord::Base
     new(activity_attributes)
   end
 
-  # FIXME (need v2 api support)
   def self.parse_gps_data(response)
-    # response.geo.waypoints if response.geo
+    return [] unless response['time_series'].include?('position')
+    response['time_series']['position'].map {|time, val| val}
   end
 
   def self.parse_hr_data(response)
+    return [] unless response['time_series'].include?('heartrate')
     response['time_series']['heartrate'].map {|time, val| val}
   end
 
-  # FIXME
   def self.parse_speed_data(response)
-    # speed_data = response.metrics.detect { |h| h.metric_type == 'SPEED' }
-    # speed_data['values'].map { |kph| kph.to_i * KPH_TO_MPH } if speed_data
+    return [] unless response['time_series'].include?('speed')
+    response['time_series']['speed'].map {|time, val| val * MPS_TO_MPH}
   end
 
 # breakdown graphs

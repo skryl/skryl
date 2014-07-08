@@ -5,7 +5,7 @@ class Mapmyfitness < ModuleBase
   def update
     num_updates = 0
     client = config.mmf_client
-    activities = client.workouts
+    activities = client.workouts(started_after: Activity.last.start_time.xmlschema)
 
     activities.each do |a|
       id = a['_links']['self'].first['id'].to_s
