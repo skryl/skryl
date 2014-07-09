@@ -1,5 +1,36 @@
 module GraphStats
 
+  def self.included(klass)
+    klass.extend(ClassMethods)
+  end
+
+private
+
+  def fix_zeroes(graph_data)
+    data = []
+    graph_data.inject do |p_prev,p|
+      data.push(
+        if p < 0
+          p_prev
+        elsif p_prev - p > @dy_cutoff
+          p_prev - 1
+        else p
+        end
+      ); data.last
+    end
+    data
+  end
+
+  def reduce(graph_data, factor = nil)
+    reduce_factor = factor || @reduce_factor
+    return graph_data if reduce_factor == 1
+    data = []
+    graph_data.each_slice(reduce_factor) { |s| data << (s.sum/s.size) }
+    data
+  end
+
+module ClassMethods
+
   def set_start_time_field(field)
     @start_time_field = field
     scope :ordered, order("#{field} ASC")
@@ -134,5 +165,6 @@ private
     h = Hash.new {|h,k| h[k] = []}
     activity_by_day.inject(h) { |h, (k,v)| v.each { |i| h[k + @shift_proc[i]] << i }; h }
   end
+end
 
 end

@@ -14,9 +14,9 @@ end
 
 desc 'Update data from source for all modules (e.g. Goodreads, Twitter, etc.)'
 task :update => :environment do
-  App.module_instances do |mod|
+  DataModule.configured.each do |mod_class|
     begin
-      mod.update if mod.respond_to? :update
+      mod_class.new.update
     rescue
       $stderr.puts "Update error: " + $!.message
     end
@@ -27,9 +27,9 @@ end
 
 desc 'Iinitial update from all source modules'
 task :initial_update => :environment do
-  App.module_instances do |mod|
+  DataModule.configured.each do |mod|
     begin
-      mod.initial_update if mod.respond_to? :initial_update
+      mod_class.new.initial_update
     rescue
       $stderr.puts "Update error: " + $!.message
     end

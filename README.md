@@ -1,19 +1,16 @@
 Dorian
 ======
 
-
 A personal identity manager and aggregator written in Rails 3.1. A running demo is available at [skryl.org](http://skryl.org).
-
-**Warning**: Currently in development status and prone to constant change!
 
 Currently implemented modules for data aggregation:
 
 * Blog via Atom feed
-* Facts via JSON API
 * GitHub via RSS feed
 * GoodReads via XML API
 * Twitter via RSS feed
-* Zeo via REST API
+* Nike+ via REST API
+* MapMyFitness via REST API
 
 Installation
 ------------
@@ -28,7 +25,7 @@ Installation
 
 3. Generate a new secret token initialier with `rake secret_deploy`.
 
-4. Copy `config/app.rb.example` to `config/app.rb` and customize its contents.
+4. Customize `config/initializers/app.rb` and set your credentials in `.env.yaml`
 
 5. Customize the views in `app/views` with your own information.
 

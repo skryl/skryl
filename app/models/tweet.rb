@@ -1,11 +1,20 @@
 class Tweet < ActiveRecord::Base
   before_validation :extract_is_mention
+
   scope :not_mention, where('is_mention = ?', false)
-  scope :ordered, order('published_at DESC')
-  scope :past_year, where('published_at > ?', Time.now - 12.months)
-  validates_inclusion_of :is_mention, :in => [true, false]
-  validates_presence_of :content, :permalink, :guid, :published_at
+  scope :ordered,     order('published_at DESC')
+  scope :past_year,   where('published_at > ?', Time.now - 12.months)
+
+  validates_inclusion_of  :is_mention, :in => [true, false]
+  validates_presence_of   :content, :permalink, :guid, :published_at
   validates_uniqueness_of :permalink
+
+  def self.new_from_api_response(tweet)
+    new :content      => tweet.full_text,
+        :permalink    => tweet.uri.to_s,
+        :published_at => tweet.created_at,
+        :guid         => tweet.id.to_s
+  end
 
   def content_html
     html = content

@@ -1,11 +1,12 @@
 class Activity < ActiveRecord::Base
-  extend GraphStats
+  include GraphStats
 
   serialize :gps_data
   serialize :hr_data
   serialize :speed_data
 
   validates_presence_of :activity_id, :activity_type, :start_time, :duration, :distance, :calories
+
   scope :past_year, where('start_time > ?', Time.now - 12.months)
 
   set_start_time_field :start_time
@@ -14,34 +15,27 @@ class Activity < ActiveRecord::Base
   set_months_to_graph 6
   set_average_range 30
 
-  GPS_INTERVAL = 1.seconds
-  HR_INTERVAL = 1.seconds
+  RUN_INTERVAL = 1.seconds
+  HR_INTERVAL  = 1.seconds
 
-  RUN_REDUCE_FACTOR = 10
   RUN_DY_CUTOFF = 30
+  HR_DY_CUTOFF  = 30
 
-  HR_REDUCE_FACTOR = 2
-  HR_DY_CUTOFF = 30
+  RUN_INTERVAL_REDUCTION = 10
+  HR_INTERVAL_REDUCTION  = 2
 
-  KPH_TO_MPH = 0.621
   MPS_TO_MPH = 2.237
 
-  def self.new_from_api_response(id, response)
-    return unless id && response
-
-    activity_attributes = {
-      activity_id:         id,
-      activity_type:       response['name'] == 'Treadmill' ? 'HEARTRATE' : 'RUN',
-      start_time:          Time.parse(response['start_datetime']),
-      duration:            response['aggregates']['elapsed_time_total']/60.0,
-      distance:            0,
-      calories:            0,
-      gps_data:            parse_gps_data(response),
-      hr_data:             parse_hr_data(response),
-      speed_data:          parse_speed_data(response)
-    }
-
-    new(activity_attributes)
+  def self.new_from_api_response(response)
+    new activity_id:         response['_links']['self'].first['id'].to_s,
+        activity_type:       response['name'] == 'Treadmill' ? 'HEARTRATE' : 'RUN',
+        start_time:          Time.parse(response['start_datetime']),
+        duration:            response['aggregates']['elapsed_time_total']/60.0,
+        distance:            0,
+        calories:            0,
+        gps_data:            parse_gps_data(response),
+        hr_data:             parse_hr_data(response),
+        speed_data:          parse_speed_data(response)
   end
 
   def self.parse_gps_data(response)
@@ -59,58 +53,30 @@ class Activity < ActiveRecord::Base
     response['time_series']['speed'].map {|time, val| val * MPS_TO_MPH}
   end
 
-# breakdown graphs
+  def initialize(attrs)
+    super
+    @reduce_factor, @data_interval, @dy_cutoff = run? ?
+      [RUN_INTERVAL_REDUCTION, RUN_INTERVAL, RUN_DY_CUTOFF] :
+      [HR_INTERVAL_REDUCTION, HR_INTERVAL, HR_DY_CUTOFF]
+  end
 
   def graph_data
     @graph_data ||= run? ? normalize(speed_data) : normalize(hr_data)
   end
 
-  def graph_categories
-    reduce_factor = (run? ? RUN_REDUCE_FACTOR : HR_REDUCE_FACTOR)
-    data_interval = (run? ? GPS_INTERVAL : HR_INTERVAL)
-    @categories ||= graph_data.map.with_index { |p, i| (start_time_fixed + i * (reduce_factor * data_interval)).strftime("%I:%M %p") }
+  def graph_intervals
+    @intervals ||= graph_data.map.with_index { |p, i| (start_time + i * (@reduce_factor * @data_interval)).strftime("%I:%M %p") }
   end
 
- private
-
-  def run?
-    activity_type == 'RUN'
-  end
+private
 
   def normalize(graph_data)
     return [] unless graph_data
     reduce( fix_zeroes( graph_data.map {|p| p.to_i} ) )
   end
 
-  def fix_zeroes(graph_data)
-    dy_cutoff = (run? ? RUN_DY_CUTOFF : HR_DY_CUTOFF)
-    data = []
-    graph_data.inject do |p_prev,p|
-      data.push(
-        if p < 0
-          p_prev
-        elsif p_prev - p > dy_cutoff
-          p_prev - 1
-        else p
-        end
-      ); data.last
-    end
-    data
+  def run?
+    activity_type == 'RUN'
   end
-
-  def reduce(graph_data, factor = nil)
-    reduce_factor = factor || (run? ? RUN_REDUCE_FACTOR : HR_REDUCE_FACTOR)
-    return graph_data if reduce_factor == 1
-    data = []
-    graph_data.each_slice(reduce_factor) { |s| data << (s.sum/s.size) }
-    data
-  end
-
-  # Time is synced incorrectly on the sportband for some reason
-  #
-  def start_time_fixed
-    start_time - (run? ? 0 : (start_time.isdst ? 1.hours : 1))
-  end
-
 
 end

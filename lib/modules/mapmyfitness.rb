@@ -1,28 +1,18 @@
-require 'module_base'
-
-class Mapmyfitness < ModuleBase
+class Mapmyfitness < DataModule
 
   def update
-    num_updates = 0
     client = config.mmf_client
-    activities = client.workouts(started_after: Activity.last.start_time.xmlschema)
+    args   = Activity.any? ? {started_after: Activity.last.start_time.xmlschema} : {}
+    activities = client.workouts(args)
 
     activities.each do |a|
       id = a['_links']['self'].first['id'].to_s
-      unless Activity.find_by_activity_id(id)
-        activity = Activity.new_from_api_response(id, client.workout(workout_id: id, field_set: 'time_series'))
-        if activity.valid?
-          activity.save
-          num_updates += 1
-        else
-          puts activity.activity_id
-          puts activity.errors.full_messages
-        end
-      end
+      activity = client.workout(workout_id: id, field_set: 'time_series')
+      save_and_increment(Activity.new_from_api_response(activity)) unless
+          Activity.find_by_activity_id(id)
     end
 
-    puts "Fetched #{num_updates} new activities"
+    puts "Fetched #{counter} new activities"
   end
 
 end
-
