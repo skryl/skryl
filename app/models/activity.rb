@@ -15,27 +15,33 @@ class Activity < ActiveRecord::Base
   set_months_to_graph 6
   set_average_range 30
 
-  RUN_INTERVAL = 1.seconds
   HR_INTERVAL  = 1.seconds
-
-  RUN_DY_CUTOFF = 30
   HR_DY_CUTOFF  = 30
+  HR_INTERVAL_REDUCE = 4
 
-  RUN_INTERVAL_REDUCTION = 10
-  HR_INTERVAL_REDUCTION  = 2
+  SPEED_INTERVAL = 1.seconds
+  SPEED_DY_CUTOFF = 30
+  SPEED_INTERVAL_REDUCE = 8
 
   MPS_TO_MPH = 2.237
+  LONG_SESSION = 5000
+
+  CONSTANTS = {
+    reduce_factor: [SPEED_INTERVAL_REDUCE, HR_INTERVAL_REDUCE],
+    data_interval: [SPEED_INTERVAL, HR_INTERVAL],
+    dy_cutoff:     [SPEED_DY_CUTOFF, HR_DY_CUTOFF]
+  }
 
   def self.new_from_api_response(response)
-    new activity_id:         response['_links']['self'].first['id'].to_s,
-        activity_type:       response['name'] == 'Treadmill' ? 'HEARTRATE' : 'RUN',
-        start_time:          Time.parse(response['start_datetime']),
-        duration:            response['aggregates']['elapsed_time_total']/60.0,
-        distance:            0,
-        calories:            0,
-        gps_data:            parse_gps_data(response),
-        hr_data:             parse_hr_data(response),
-        speed_data:          parse_speed_data(response)
+    new activity_id:    response['_links']['self'].first['id'].to_s,
+        activity_type:  response['name'] == 'Treadmill' ? 'HEARTRATE' : 'RUN',
+        start_time:     Time.parse(response['start_datetime']),
+        duration:       response['aggregates']['elapsed_time_total']/60.0,
+        distance:       0,
+        calories:       0,
+        gps_data:       parse_gps_data(response),
+        hr_data:        parse_hr_data(response),
+        speed_data:     parse_speed_data(response)
   end
 
   def self.parse_gps_data(response)
@@ -53,19 +59,28 @@ class Activity < ActiveRecord::Base
     response['time_series']['speed'].map {|time, val| val * MPS_TO_MPH}
   end
 
-  def initialize(attrs)
-    super
-    @reduce_factor, @data_interval, @dy_cutoff = run? ?
-      [RUN_INTERVAL_REDUCTION, RUN_INTERVAL, RUN_DY_CUTOFF] :
-      [HR_INTERVAL_REDUCTION, HR_INTERVAL, HR_DY_CUTOFF]
-  end
-
   def graph_data
-    @graph_data ||= run? ? normalize(speed_data) : normalize(hr_data)
+    @graph_data ||= missing_hr? ? normalize(speed_data) : normalize(hr_data)
   end
 
   def graph_intervals
-    @intervals ||= graph_data.map.with_index { |p, i| (start_time + i * (@reduce_factor * @data_interval)).strftime("%I:%M %p") }
+    @intervals ||= graph_data.map.with_index { |p, i| (start_time + i * (reduce_factor * data_interval)).strftime("%I:%M %p") }
+  end
+
+  def reduce_factor
+    @reduce_factor ||= choose_constant(:reduce_factor) * (long_session? ? 2 : 1)
+  end
+
+  def data_interval
+    @data_interval ||= choose_constant(:data_interval)
+  end
+
+  def dy_cutoff
+    @dy_cutoff ||= choose_constant(:dy_cutoff)
+  end
+
+  def missing_hr?
+    hr_data.empty?
   end
 
 private
@@ -75,8 +90,12 @@ private
     reduce( fix_zeroes( graph_data.map {|p| p.to_i} ) )
   end
 
-  def run?
-    activity_type == 'RUN'
+  def choose_constant(name)
+    CONSTANTS[name][missing_hr? ? 0 : 1]
+  end
+
+  def long_session?
+    speed_data.size > LONG_SESSION || hr_data.size > LONG_SESSION
   end
 
 end

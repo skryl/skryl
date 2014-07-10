@@ -31,8 +31,8 @@ p I track my physical activity using the #{link_to 'TomTom Multisport GPS Watch'
           - activity.sort!{|t1, t2| t2.start_time <=> t1.start_time}.each do |a|
             h3 id="month_#{year}_#{month}" class="#{extra}" #{month_name(month)} #{a.start_time.day}
             div*{class: "chart", id: "activity_breakdown_chart#{a.id}"}
-            - if a.activity_type == 'RUN'
-              = render :partial => 'charts/run_breakdown_chart', :locals => {:record_id => a.id}
+            - if a.missing_hr?
+              = render :partial => 'charts/speed_breakdown_chart', :locals => {:record_id => a.id}
             - else
               = render :partial => 'charts/hr_breakdown_chart', :locals => {:record_id => a.id}
 

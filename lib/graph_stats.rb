@@ -12,7 +12,7 @@ private
       data.push(
         if p < 0
           p_prev
-        elsif p_prev - p > @dy_cutoff
+        elsif p_prev - p > dy_cutoff
           p_prev - 1
         else p
         end
@@ -22,10 +22,10 @@ private
   end
 
   def reduce(graph_data, factor = nil)
-    reduce_factor = factor || @reduce_factor
-    return graph_data if reduce_factor == 1
+    factor ||= reduce_factor
+    return graph_data if factor == 1
     data = []
-    graph_data.each_slice(reduce_factor) { |s| data << (s.sum/s.size) }
+    graph_data.each_slice(factor) { |s| data << (s.sum/s.size) }
     data
   end
 
