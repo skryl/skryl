@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131228020342) do
+ActiveRecord::Schema.define(:version => 20140701024426) do
 
   create_table "activities", :force => true do |t|
     t.datetime "created_at",    :null => false
@@ -31,14 +31,6 @@ ActiveRecord::Schema.define(:version => 20131228020342) do
     t.text     "gps_data"
     t.text     "hr_data"
     t.text     "speed_data"
-  end
-
-  create_table "articles", :force => true do |t|
-    t.string   "title"
-    t.string   "permalink"
-    t.datetime "published_at"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
   end
 
   create_table "book_authors", :force => true do |t|
@@ -68,6 +60,15 @@ ActiveRecord::Schema.define(:version => 20131228020342) do
     t.text     "content"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+  end
+
+  create_table "links", :force => true do |t|
+    t.string   "title"
+    t.string   "permalink"
+    t.datetime "published_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.string   "tag"
   end
 
   create_table "tweets", :force => true do |t|

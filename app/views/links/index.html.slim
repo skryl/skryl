@@ -1,25 +1,23 @@
 - content_for(:title) do
-  == 'Articles &mdash; skryl.com'
+  == 'Links &mdash; skryl.com'
 
 .row
   .col_12.last#header
     header
       = render :partial => 'shared/go_home'
-      h1 Articles
-p I've written #{pluralize(@articles_count, 'article')} since #{@articles_by_year.keys.min}.
-
+      h1= params[:tag].pluralize.capitalize
 .row
   .col_1
     ul.section_list
-      - @articles_by_year.each do |year, articles|
+      - @links_by_year.each do |year, links|
           li= link_to year, "#year_#{year}"
   .col_11.last#header
     - cutoff = Time.now - 1.year
-    - @articles_by_year.each do |year, articles|
+    - @links_by_year.each do |year, links|
       h2 id="year_#{year}"= year
-      .articles_year
+      .links_year
         ul
-          - articles.each do |a|
+          - links.each do |a|
             li
               - if a.published_at > cutoff
                 - published = "#{distance_of_time_in_words(a.published_at.getlocal, Time.now, true)} ago"

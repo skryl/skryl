@@ -3,28 +3,32 @@ require 'set'
 
 class DataModule
 
-  class_attribute :config
-  cattr_accessor  :configured
+  cattr_accessor  :all_modules
+  class_attribute :instances
   attr_accessor   :counter
+  attr_reader     :config
 
   def self.configure(&block)
-    self.configured ||= Set.new
-    self.config     ||= OpenStruct.new
+    self.all_modules ||= Set.new
+    self.instances   ||= []
 
-    configured << self
-    block.call(config)
+    instance = self.new
+    all_modules << instance
+    instances   << instance
+    block.call(instance.config)
   end
 
   def self.update
-    new.update
+    instances.map(&:update)
   end
 
   def self.initial_update
-    new.update
+    instances.map(&:initial_update)
   end
 
   def initialize
     @counter = 0
+    @config = OpenStruct.new
   end
 
   def update

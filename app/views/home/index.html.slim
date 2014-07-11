@@ -13,11 +13,12 @@
   .col_6#about
     h2 About
     p My name is #{link_to 'Alex', 'http://skryl.org'}, I am a freelance software engineer currently living in Chicago, and this is my personal data aggregator. It helps me set better goals and track my progress as I stumble along the path to enlightenment. Feel free to drop me a line at #{link_to 'aleksey.skryl@gmail.com', 'mailto:aleksey.skryl@gmail.com'} or check out my #{link_to 'resume', 'http://careers.stackoverflow.com/skryl'}.
-  .col_6.last#articles
-    h2= link_to 'Writing', :articles
-    p I #{link_to 'write', :articles} fiction and blog once in a while. Here is my latest writing:
+
+  .col_6.last#writing
+    h2= link_to 'Writing', 'links?tag=writing'
+    p I #{link_to 'write', 'links?tag=writing'} fiction and blog once in a while. This is my latest writing.
     ul
-      - @articles.each do |a|
+      - @writings.each do |a|
         li
           = link_to a.title, a.permalink
           = ' '
@@ -26,15 +27,12 @@
 .row
   .col_6#books
     h2= link_to 'Books', :books
-    p
-      | #{link_to('My entire reading history', :books)} and #{link_to('notes', 'https://www.evernote.com/pub/rut216/books') + " are available online. "}
-      - if @book
-        | The most recent book that I read was <em>#{@book.title}</em> by #{@book.author}.
+    p My entire #{link_to('reading history', :books)} is available online. The most recent book that I read was <em>#{@book.title}</em> by #{@book.author}.
     = render :partial => 'charts/books_chart'
 
-  .col_6.last#projects
-    h2= link_to 'Projects', "https://github.com/skryl"
-    p These are the open source #{link_to 'projects', "https://github.com/skryl"} that I'm currently working on:
+  .col_6.last#programming
+    h2= link_to 'Programming', "https://github.com/skryl"
+    p These are the open source #{link_to 'projects', "https://github.com/skryl"} that I'm currently working on.
     ul
       li #{link_to 'cortex', 'https://github.com/skryl/cortex'} &mdash; A nuPIC whitepaper implementation
       li #{link_to 'cursed', 'https://github.com/skryl/cursed'} &mdash; A curses based window manager for tabular data
@@ -43,6 +41,28 @@
       li #{link_to 'polly', 'https://github.com/skryl/polly'} &mdash; A DSL for working with functional symbolic expressions in Ruby
       li #{link_to 'qbwc', 'https://github.com/skryl/qbwc'} &mdash; A Rails gem for interfacing with Intuit's Quickbooks Web Connector
       li #{link_to 'qbxml', 'https://github.com/skryl/qbxml'} &mdash; A Quickbooks XML Parser and validation tool
+
+.row
+  .col_6#links
+    h2= link_to 'Links', 'links?tag=link'
+    p Some inspiring #{link_to 'content', 'links?tag=link'} from around the web.
+    ul
+      - @links.each do |a|
+        li
+          = link_to a.title, a.permalink
+          = ' '
+          span.meta= a.published_at.getlocal.strftime('%b %e, %Y')
+
+  .col_6.last#tech
+    h2= link_to 'Tech', 'links?tag=tech'
+    p Check out some of my #{link_to 'tutorials', 'links?tag=tech'} and technical tidbits here.
+    ul
+      - @tech.each do |a|
+        li
+          = link_to a.title, a.permalink
+          = ' '
+          span.meta= a.published_at.getlocal.strftime('%b %e, %Y')
+
 
 .row
   .col_6#twitter
@@ -74,11 +94,6 @@
     h2= link_to 'Exercise', :exercise
     p I track my #{link_to 'exercise', :exercise} to improve my physical and mental performance.
     = render :partial => 'charts/exercise_summary_chart', :locals => { :is_compact => true }
-
-  /*.col_6.last#Exercise*/
-  /*  h2= link_to 'Exercise', :exercise*/
-  /*  p I track my #{link_to 'exercise', :exercise} to stay healthy.*/
-  /*  = render :partial => 'charts/exercise_chart', :locals => { :is_compact => true }*/
 
 .row
   .col_12.last

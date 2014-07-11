@@ -2,8 +2,19 @@ Rails.configuration.name         = Rails.application.class.parent.name
 Rails.configuration.full_name    = 'Aleksey Skryl'
 Rails.configuration.display_name = 'Aleksey Skryl'
 
-Blog.configure do |mod|
-  mod.atom = [ 'http://thoughts.skryl.org/rss', 'http://fiction.skryl.org/rss' ]
+RssFeed.configure do |mod|
+  mod.tag = :writing
+  mod.atom = [ 'http://thoughts.skryl.org/rss' ]
+end
+
+RssFeed.configure do |mod|
+  mod.tag = :tech
+  mod.atom = [ 'http://tech.skryl.org/rss' ]
+end
+
+RssFeed.configure do |mod|
+  mod.tag = :link
+  mod.atom = [ 'http://getpocket.com/users/skryl/feed/read' ]
 end
 
 Github.configure do |mod|
