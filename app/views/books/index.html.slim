@@ -6,7 +6,7 @@
     header
       = render :partial => 'shared/go_home'
       h1 Books
-p I've read #{pluralize(@books_count, 'book')} since #{@books_by_year.keys.min}, the most recent of which was <em>#{@book.title}</em> by #{@book.author}. I track my reading with #{link_to 'Goodreads', 'http://www.goodreads.com/review/list/' + Goodreads.config.user_id + '?shelf=read'} and share my notes using #{link_to 'Evernote', 'https://www.evernote.com/pub/rut216/quotesnotes'}.
+p I've read #{pluralize(@books_count, 'book')} since #{@books_by_year.keys.min}, the most recent of which was <em>#{@book.title}</em> by #{@book.author}. I track my reading with #{link_to 'Goodreads', 'http://www.goodreads.com/review/list/' + Goodreads.instances[0].config.user_id + '?shelf=read'}.
 
 .row
   .col_6
@@ -38,7 +38,5 @@ p I've read #{pluralize(@books_count, 'book')} since #{@books_by_year.keys.min},
                 - unless b.isbn13.empty?
                   | ISBN13: #{link_to format_isbn13(b.isbn13), "http://www.google.com/search?tbo=p&tbm=bks&q=isbn:#{b.isbn13}"},
                 | finished #{finished}
-                - if b.notes_url
-                  | , #{link_to 'notes', b.notes_url}
 
     = render :partial => 'shared/footer'
