@@ -45,17 +45,17 @@ class Activity < ActiveRecord::Base
   end
 
   def self.parse_gps_data(response)
-    return [] unless response['time_series'].include?('position')
+    return [] unless response['time_series'] && response['time_series'].include?('position')
     response['time_series']['position'].map {|time, val| val}
   end
 
   def self.parse_hr_data(response)
-    return [] unless response['time_series'].include?('heartrate')
+    return [] unless response['time_series'] && response['time_series'].include?('heartrate')
     response['time_series']['heartrate'].map {|time, val| val}
   end
 
   def self.parse_speed_data(response)
-    return [] unless response['time_series'].include?('speed')
+    return [] unless response['time_series'] && response['time_series'].include?('speed')
     response['time_series']['speed'].map {|time, val| val * MPS_TO_MPH}
   end
 
