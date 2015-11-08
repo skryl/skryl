@@ -9,7 +9,7 @@ end
 
 RssFeed.configure do |mod|
   mod.tag = :blogging
-  mod.atom = [ 'http://tech.skryl.org/rss' ]
+  mod.atom = [ 'http://tech.skryl.org/rss', 'https://medium.com/@skryl' ]
 end
 
 RssFeed.configure do |mod|
