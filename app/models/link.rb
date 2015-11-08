@@ -5,8 +5,8 @@ class Link < ActiveRecord::Base
   validates_uniqueness_of :permalink
 
   scope :writing,  lambda { where(tag: 'writing') }
-  scope :tech,     lambda { where(tag: 'tech') }
-  scope :links,    lambda { where(tag: 'link') }
+  scope :blogging, lambda { where(tag: 'blogging') }
+  scope :links,    lambda { where(tag: 'links') }
   scope :by_tag,   lambda { |tag| where(tag: tag) }
 
   def self.new_from_rss_helper(item)

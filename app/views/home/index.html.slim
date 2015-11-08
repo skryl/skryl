@@ -34,7 +34,7 @@
     h2= link_to 'Blogging', 'links?tag=tech'
     p Check out some of my #{link_to 'tutorials', 'links?tag=tech'} and technical tidbits here.
     ul
-      - @bloggings.each do |a|
+      - @blogging.each do |a|
         li
           = link_to a.title, a.permalink
           = ' '
