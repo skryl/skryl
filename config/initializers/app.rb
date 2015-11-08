@@ -14,7 +14,7 @@ end
 
 RssFeed.configure do |mod|
   mod.tag = :link
-  mod.atom = [ 'http://getpocket.com/users/skryl/feed/read' ]
+  mod.atom = [ 'https://getpocket.com/users/skryl/feed/read' ]
 end
 
 Github.configure do |mod|
