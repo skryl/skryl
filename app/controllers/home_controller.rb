@@ -4,8 +4,8 @@ class HomeController < ApplicationController
   def index
     @actions                 = GithubAction.ordered.limit(10)
     @action_count_by_month   = GithubAction.past_year.order('published_at ASC').count_by {|a| a.published_at.beginning_of_month}
-    @writings                = Link.writing.ordered.limit(5)
-    @tech                    = Link.tech.ordered.limit(5)
+    @writing                 = Link.writing.ordered.limit(5)
+    @blogging                = Link.blogging.ordered.limit(5)
     @links                   = Link.links.ordered.limit(5)
     @book                    = Book.ordered.first
     @book_count_by_year      = Book.ordered.count_by{|b| b.finished_at.beginning_of_year}

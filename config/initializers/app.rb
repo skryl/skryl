@@ -8,12 +8,12 @@ RssFeed.configure do |mod|
 end
 
 RssFeed.configure do |mod|
-  mod.tag = :tech
+  mod.tag = :blogging
   mod.atom = [ 'http://tech.skryl.org/rss' ]
 end
 
 RssFeed.configure do |mod|
-  mod.tag = :link
+  mod.tag = :links
   mod.atom = [ 'https://getpocket.com/users/skryl/feed/read' ]
 end
 
