@@ -10,29 +10,19 @@
   .col_12
 
 .row
-  .col_6#about
+  .col_12#about
     h2 About
-    p My name is #{link_to 'Alex', 'http://skryl.org'}, I am a software engineer living in San Francisco. Welcome to my personal data aggregator. It helps me set better goals and track my progress as I stumble along the path to enlightenment. Feel free to drop me a line at #{link_to 'aleksey.skryl@gmail.com', 'mailto:aleksey.skryl@gmail.com'} or check out my #{link_to 'resume', 'http://careers.stackoverflow.com/skryl'}.
-
-  .col_6.last#writing
-    h2= link_to 'Writing', 'links?tag=writing'
-    p I #{link_to 'write', 'links?tag=writing'} fiction once in a while. This is my latest writing.
-    ul
-      - @writing.each do |a|
-        li
-          = link_to a.title, a.permalink
-          = ' '
-          span.meta= a.published_at.getlocal.strftime('%b %e, %Y')
+    p My name is #{link_to 'Alex', 'http://skryl.org'}, I am a software engineer currently living in San Francisco. This is my personal data aggregator. It helps me set better goals and track my progress as I stumble along the path to enlightenment. Feel free to drop me a line at #{link_to 'aleksey.skryl@gmail.com', 'mailto:aleksey.skryl@gmail.com'} or check out my #{link_to 'resume', 'http://careers.stackoverflow.com/skryl'}.
 
 .row
-  .col_6#books
-    h2= link_to 'Books', :books
+  .col_6#reading
+    h2= link_to 'Reading', :books
     p My entire #{link_to('reading history', :books)} is available online. The most recent book that I read was <em>#{@book.title}</em> by #{@book.author}.
     = render :partial => 'charts/books_chart'
 
-  .col_6.last#Blogging
-    h2= link_to 'Blogging', 'links?tag=tech'
-    p Check out some of my #{link_to 'tutorials', 'links?tag=tech'} and technical tidbits here.
+  .col_6.last#writing
+    h2= link_to 'Writing', 'links?tag=tech'
+    p Check out some of my #{link_to 'technical tidbits', 'links?tag=tech'} here.
     ul
       - @blogging.each do |a|
         li
@@ -90,11 +80,11 @@
           span.meta= link_to distance_of_time_in_words(a.published_at.getlocal, Time.now, true), a.permalink
     p= link_to "See my Github profile", 'https://github.com/skryl'
 
-.row
-  .col_12#Physical
-    h2= link_to 'Exercise', :exercise
-    p I track my #{link_to 'exercise', :exercise} to improve my physical and mental performance.
-    = render :partial => 'charts/exercise_summary_chart', :locals => { :is_compact => true }
+/ .row
+/   .col_12#Physical
+/     h2= link_to 'Exercise', :exercise
+/     p I track my #{link_to 'exercise', :exercise} to improve my physical and mental performance.
+/     = render :partial => 'charts/exercise_summary_chart', :locals => { :is_compact => true }
 
 .row
   .col_12.last

@@ -221,3 +221,9 @@ DEPENDENCIES
   twitter
   uglifier
   whenever
+
+RUBY VERSION
+   ruby 1.9.3p547
+
+BUNDLED WITH
+   1.16.1
