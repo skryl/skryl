@@ -22,9 +22,9 @@
 
   .col_6.last#writing
     h2= link_to 'Writing', 'links?tag=writing'
-    p Check out some of my #{link_to 'technical tidbits', 'links?tag=writing'} here.
+    p Check out some of my thoughts and #{link_to 'technical tidbits', 'links?tag=writing'} here.
     ul
-      - @blogging.each do |a|
+      - @writing.each do |a|
         li
           = link_to a.title, a.permalink
           = ' '
