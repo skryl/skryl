@@ -21,8 +21,8 @@
     = render :partial => 'charts/books_chart'
 
   .col_6.last#writing
-    h2= link_to 'Writing', 'links?tag=tech'
-    p Check out some of my #{link_to 'technical tidbits', 'links?tag=tech'} here.
+    h2= link_to 'Writing', 'links?tag=writing'
+    p Check out some of my #{link_to 'technical tidbits', 'links?tag=writing'} here.
     ul
       - @blogging.each do |a|
         li
