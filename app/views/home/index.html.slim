@@ -11,18 +11,17 @@
 
 .row
   .col_12#about
-    h2 About
-    p My name is #{link_to 'Alex', 'http://skryl.org'}, I am a software engineer currently living in San Francisco. This is my personal data aggregator. It helps me set better goals and track my progress as I stumble along the path to enlightenment. Feel free to drop me a line at #{link_to 'aleksey.skryl@gmail.com', 'mailto:aleksey.skryl@gmail.com'} or check out my #{link_to 'resume', 'http://careers.stackoverflow.com/skryl'}.
+    p I am a software engineer living in San Francisco. This is my personal data aggregator. It helps me set better goals and track my progress as I stumble along the path to enlightenment. Feel free to drop me a line at #{link_to 'aleksey.skryl@gmail.com', 'mailto:aleksey.skryl@gmail.com'} or check out my #{link_to 'resume', 'http://careers.stackoverflow.com/skryl'}.
 
 .row
-  .col_6#reading
-    h2= link_to 'Reading', :books
-    p My entire #{link_to('reading history', :books)} is available online. The most recent book that I read was <em>#{@book.title}</em> by #{@book.author}.
+  .col_6#read
+    h2= link_to 'Read', :books
+    p My #{link_to('reading history', :books)} is available online. The most recent book that I read was <em>#{@book.title}</em> by #{@book.author}.
     = render :partial => 'charts/books_chart'
 
-  .col_6.last#writing
-    h2= link_to 'Writing', 'links?tag=writing'
-    p Check out some of my thoughts and #{link_to 'technical tidbits', 'links?tag=writing'} here.
+  .col_6.last#Written
+    h2= link_to 'Written', 'links?tag=writing'
+    p Check out some of my #{link_to 'thoughts', 'links?tag=writing'} and #{link_to 'technical tidbits', 'links?tag=writing'} here.
     ul
       - @writing.each do |a|
         li
@@ -42,8 +41,8 @@
           = ' '
           span.meta= a.published_at.getlocal.strftime('%b %e, %Y')
 
-  .col_6.last#programming
-    h2= link_to 'Programming', "https://github.com/skryl"
+  .col_6.last#code
+    h2= link_to 'Code', "https://github.com/skryl"
     p These are the open source #{link_to 'projects', "https://github.com/skryl"} that I'm currently working on.
     ul
       li #{link_to 'rbpath', 'https://github.com/skryl/rbpath'} &mdash; An XPath like query language for Ruby data structures

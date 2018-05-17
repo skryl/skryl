@@ -18,6 +18,7 @@ gem 'whenever', :require => false
 
 group :development, :test do
   gem 'pry'
+  gem 'pry-rails'
   gem 'rspec-rails'
   gem 'sqlite3'
   gem 'turn', :require => false

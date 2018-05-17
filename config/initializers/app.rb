@@ -4,12 +4,7 @@ Rails.configuration.display_name = 'Aleksey Skryl'
 
 RssFeed.configure do |mod|
   mod.tag = :writing
-  mod.atom = [ 'http://thoughts.skryl.org/rss' ]
-end
-
-RssFeed.configure do |mod|
-  mod.tag = :blogging
-  mod.atom = [ 'http://tech.skryl.org/rss', 'https://medium.com/feed/@skryl' ]
+  mod.atom = [ 'http://thoughts.skryl.org/rss', 'http://tech.skryl.org/rss', 'https://medium.com/feed/@skryl' ]
 end
 
 RssFeed.configure do |mod|
@@ -25,7 +20,7 @@ Goodreads.configure do |mod|
   mod.shelf   = 'read'
   mod.key     = ENV['GOODREADS_KEY']
   mod.user_id = ENV['GOODREADS_ID']
-  mod.uri     = "http://www.goodreads.com/review/list/#{mod.user_id}.xml?v=2&per_page=200&shelf=read&sort=date_read&key=#{mod.key}"
+  mod.uri     = "https://www.goodreads.com/review/list/#{mod.user_id}.xml?v=2&per_page=200&shelf=read&sort=date_read&key=#{mod.key}"
 end
 
 TwitterStream.configure do |mod|
