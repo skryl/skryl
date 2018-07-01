@@ -3,7 +3,7 @@ class Book < ActiveRecord::Base
 
   has_many :authors, :class_name => 'BookAuthor'
 
-  scope :ordered, order('finished_at DESC')
+  scope :ordered, -> { order('finished_at DESC') }
 
   validates_presence_of   :goodreads_id, :title, :finished_at
   validates_uniqueness_of :goodreads_id

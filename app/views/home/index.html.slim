@@ -65,7 +65,7 @@
         li
           = raw t.content_html
           = ' '
-          span.meta= link_to distance_of_time_in_words(t.published_at.getlocal, Time.now, true), t.permalink
+          span.meta= link_to distance_of_time_in_words(t.published_at.getlocal, Time.now), t.permalink
     p= link_to "Every one of my #{pluralize(number_with_delimiter(Tweet.count), 'tweet')}", :twitter
 
   .col_6.last#github
@@ -77,7 +77,7 @@
         li
           = raw a.title
           = ' '
-          span.meta= link_to distance_of_time_in_words(a.published_at.getlocal, Time.now, true), a.permalink
+          span.meta= link_to distance_of_time_in_words(a.published_at.getlocal, Time.now), a.permalink
     p= link_to "See my Github profile", 'https://github.com/skryl'
 
 / .row

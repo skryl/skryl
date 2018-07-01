@@ -7,7 +7,7 @@ class Activity < ActiveRecord::Base
 
   validates_presence_of :activity_id, :activity_type, :start_time, :duration, :distance, :calories
 
-  scope :past_year, where('start_time > ?', Time.now - 12.months)
+  scope :past_year, -> { where('start_time > ?', Time.now - 12.months) }
 
   set_start_time_field :start_time
   set_duration_field :duration

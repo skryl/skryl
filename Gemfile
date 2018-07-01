@@ -1,10 +1,11 @@
 source 'http://rubygems.org'
 
-ruby '1.9.3'
-gem 'rails', '~> 3.1'
+ruby '2.4.2'
+gem 'rails', '~> 5'
+gem 'actionpack-action_caching'
 
 gem 'coffee-script'
-gem 'gon', '3.0.5'
+gem 'gon'
 gem 'httparty'
 gem 'jquery-rails'
 gem 'libxml-ruby'
@@ -29,5 +30,5 @@ group :production do
   gem 'memcachier'
   gem 'newrelic_rpm'
   gem 'pg'
-  gem 'thin'
+  gem 'puma'
 end

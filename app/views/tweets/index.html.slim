@@ -8,7 +8,7 @@
       h1 Twitter
 
     p
-      | Every one of my tweets. Ever. That's right, all #{number_with_delimiter(@tweet_count)} of them. Also, 
+      | Every one of my tweets. Ever. That's right, all #{number_with_delimiter(@tweet_count)} of them. Also,
       - if params[:options] == 'with_mentions'
         = link_to 'see a list without mentions.', :twitter
       - else
@@ -40,7 +40,7 @@
                 span.meta
                   - cutoff = Time.now - 1.year
                   - if t.published_at > cutoff
-                    a(href=t.permalink) #{distance_of_time_in_words(t.published_at.getlocal, Time.now, true)} ago
+                    a(href=t.permalink) #{distance_of_time_in_words(t.published_at.getlocal, Time.now)} ago
                   - else
                     a(href=t.permalink)= t.published_at.getlocal.strftime('%b %e, %Y %H:%M')
 

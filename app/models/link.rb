@@ -1,12 +1,11 @@
 class Link < ActiveRecord::Base
-  scope :ordered, order('published_at DESC')
-
   validates_presence_of   :title, :permalink, :published_at
   validates_uniqueness_of :permalink
 
-  scope :writing,  lambda { where(tag: 'writing') }
-  scope :links,    lambda { where(tag: 'link') }
-  scope :by_tag,   lambda { |tag| where(tag: tag) }
+  scope :ordered,  -> { order('published_at DESC') }
+  scope :writing,  -> { where(tag: 'writing') }
+  scope :links,    -> { where(tag: 'link') }
+  scope :by_tag,   ->(tag) { where(tag: tag) }
 
   def self.new_from_rss_helper(item)
     new :title        => item.title,

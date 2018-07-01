@@ -28,7 +28,7 @@ p I've read #{pluralize(@books_count, 'book')} since #{@books_by_year.keys.min},
           - books.each do |b|
             li
               - if b.finished_at > cutoff
-                - finished = "#{distance_of_time_in_words(b.finished_at.getlocal, Time.now, true)} ago"
+                - finished = "#{distance_of_time_in_words(b.finished_at.getlocal, Time.now)} ago"
               - else
                 - finished = b.finished_at.getlocal.strftime('%b %e, %Y')
               | <em>#{link_to b.title, "http://www.goodreads.com/book/show/#{b.goodreads_id}"}</em> by #{b.author}

@@ -20,7 +20,7 @@
           - links.each do |a|
             li
               - if a.published_at > cutoff
-                - published = "#{distance_of_time_in_words(a.published_at.getlocal, Time.now, true)} ago"
+                - published = "#{distance_of_time_in_words(a.published_at.getlocal, Time.now)} ago"
               - else
                 - published = a.published_at.getlocal.strftime('%b %e, %Y')
               | <em>#{link_to a.title, a.permalink}</em>

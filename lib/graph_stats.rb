@@ -33,9 +33,9 @@ module ClassMethods
 
   def set_start_time_field(field)
     @start_time_field = field
-    scope :ordered, order("#{field} ASC")
-    scope :last_n_days, lambda { |n| where("#{field} > ?", (Date.today - n)) }
-    scope :last_n_months, lambda { |n| where("#{field} > ?", (Date.today.end_of_month - (n-1).months)) }
+    scope :ordered,       -> { order("#{field} ASC") }
+    scope :last_n_days,   ->(n) { where("#{field} > ?", (Date.today - n)) }
+    scope :last_n_months, ->(n) { where("#{field} > ?", (Date.today.end_of_month - (n-1).months)) }
   end
 
   def set_end_time_field(field)

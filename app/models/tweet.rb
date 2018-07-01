@@ -1,9 +1,9 @@
 class Tweet < ActiveRecord::Base
   before_validation :extract_is_mention
 
-  scope :not_mention, where('is_mention = ?', false)
-  scope :ordered,     order('published_at DESC')
-  scope :past_year,   where('published_at > ?', Time.now - 12.months)
+  scope :not_mention, -> { where('is_mention = ?', false) }
+  scope :ordered,     -> { order('published_at DESC') }
+  scope :past_year,   -> { where('published_at > ?', Time.now - 12.months) }
 
   validates_inclusion_of  :is_mention, :in => [true, false]
   validates_presence_of   :content, :permalink, :guid, :published_at
