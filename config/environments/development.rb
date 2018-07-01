@@ -2,6 +2,7 @@ require 'heroku_env'
 
 Dorian::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
+  config.eager_load = true
 
   # In the development environment your application's code is reloaded on
   # every request.  This slows down response time but is perfect for development

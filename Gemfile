@@ -1,8 +1,9 @@
 source 'http://rubygems.org'
 
 ruby '2.4.2'
-gem 'rails', '~> 5'
+gem 'rails', '~> 5.0'
 gem 'actionpack-action_caching'
+gem 'pg'
 
 gem 'coffee-script'
 gem 'gon'
@@ -21,7 +22,6 @@ group :development, :test do
   gem 'pry'
   gem 'pry-rails'
   gem 'rspec-rails'
-  gem 'sqlite3'
   gem 'turn', :require => false
 end
 
@@ -29,6 +29,5 @@ group :production do
   gem 'dalli'
   gem 'memcachier'
   gem 'newrelic_rpm'
-  gem 'pg'
-  gem 'thin'
+  gem 'puma'
 end

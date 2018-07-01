@@ -32,11 +32,11 @@ class DataModule
   end
 
   def update
-    railse 'Not Implemented'
+    raise 'Not Implemented'
   end
 
   def initial_update
-    railse 'Not Implemented'
+    raise 'Not Implemented'
   end
 
 private
