@@ -30,5 +30,5 @@ group :production do
   gem 'memcachier'
   gem 'newrelic_rpm'
   gem 'pg'
-  gem 'puma'
+  gem 'thin'
 end
