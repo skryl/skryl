@@ -25,6 +25,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'turn', :require => false
   gem 'listen'
+  gem 'dotenv-rails'
 end
 
 group :production do

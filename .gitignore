@@ -17,3 +17,4 @@ ruby/**/*
 test/
 tmp/**/*
 vendor/**/*
+*.dump
