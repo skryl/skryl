@@ -17,6 +17,6 @@ class TweetsController < ApplicationController
 private
 
   def tweets_params
-    params.options(:tag)
+    params.permit(:options)
   end
 end

@@ -1,5 +1,5 @@
 class LinksController < ApplicationController
-  caches_action :index, :cache_path => lambda { |c| c.params }
+  caches_action :index, :cache_path => lambda { |c| link_params }
 
   def index
     @links = Link.by_tag(links_params[:tag]).ordered
