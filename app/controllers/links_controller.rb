@@ -2,9 +2,7 @@ class LinksController < ApplicationController
   caches_action :index, :cache_path => lambda { |c| c.params }
 
   def index
-    params.permit(:tag)
-
-    @links = Link.by_tag(params[:tag]).ordered
+    @links = Link.by_tag(links_params[:tag]).ordered
     redirect_to :root unless @links.any?
 
     @links_count = @links.count
@@ -14,5 +12,10 @@ class LinksController < ApplicationController
     gon.linkCountByYearCategories = [ @link_count_by_year.map{|k, v| k.strftime('%Y')}.map{ |d| "'#{d}'" }.join(', ') ]
     gon.linkCountByYearData       = [ @link_count_by_year.map{|k, v| v}.join(', ') ]
   end
-end
 
+private
+
+  def links_params
+    params.permit(:tag)
+  end
+end
