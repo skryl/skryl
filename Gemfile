@@ -2,6 +2,7 @@ source 'http://rubygems.org'
 
 ruby '2.4.2'
 gem 'rails', '~> 5.0'
+gem 'bootsnap'
 gem 'actionpack-action_caching'
 gem 'pg'
 
@@ -23,6 +24,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'rspec-rails'
   gem 'turn', :require => false
+  gem 'listen'
 end
 
 group :production do

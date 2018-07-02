@@ -1,4 +1,4 @@
-Dorian::Application.routes.draw do
+Rails.application.routes.draw do
   get 'books'            => 'books#index'
   get 'twitter/:options' => 'tweets#index'
   get 'twitter'          => 'tweets#index'
