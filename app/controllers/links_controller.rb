@@ -2,6 +2,8 @@ class LinksController < ApplicationController
   caches_action :index, :cache_path => lambda { |c| c.params }
 
   def index
+    params.permit(:tag)
+
     @links = Link.by_tag(params[:tag]).ordered
     redirect_to :root unless @links.any?
 

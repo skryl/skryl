@@ -2,6 +2,8 @@ class TweetsController < ApplicationController
   caches_action :index
 
   def index
+    params.permit(:options)
+
     scope = Tweet
     scope = scope.not_mention unless params[:options] == 'with_mentions'
     @tweet_count = scope.count
