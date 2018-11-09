@@ -5,7 +5,6 @@ ruby '2.5.1'
 gem 'rails', '~> 5.0'
 gem 'bootsnap'
 gem 'actionpack-action_caching'
-gem 'sqlite3'
 
 gem 'coffee-script'
 gem 'gon'
@@ -21,6 +20,7 @@ gem 'uglifier'
 gem 'whenever', :require => false
 
 group :development, :test do
+  gem 'sqlite3'
   gem 'pry'
   gem 'pry-rails'
   gem 'rspec-rails'
