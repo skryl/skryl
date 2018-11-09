@@ -1,4 +1,4 @@
-class RemoveSleepTable < ActiveRecord::Migration
+class RemoveSleepTable < ActiveRecord::Migration[5.1]
   def change
     drop_table :sleep_records
   end

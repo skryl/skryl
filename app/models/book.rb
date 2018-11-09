@@ -4,6 +4,7 @@ class Book < ActiveRecord::Base
   has_many :authors, :class_name => 'BookAuthor'
 
   scope :ordered, -> { order('finished_at DESC') }
+  scope :after, ->(cutoff) { where('finished_at > ?', cutoff) }
 
   validates_presence_of   :goodreads_id, :title, :finished_at
   validates_uniqueness_of :goodreads_id

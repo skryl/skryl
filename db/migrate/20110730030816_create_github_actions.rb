@@ -1,4 +1,4 @@
-class CreateGithubActions < ActiveRecord::Migration
+class CreateGithubActions < ActiveRecord::Migration[5.1]
   def change
     create_table :github_actions do |t|
       t.string   :github_id

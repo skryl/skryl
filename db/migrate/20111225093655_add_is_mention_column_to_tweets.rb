@@ -1,4 +1,4 @@
-class AddIsMentionColumnToTweets < ActiveRecord::Migration
+class AddIsMentionColumnToTweets < ActiveRecord::Migration[5.1]
   def change
     change_table :tweets do |t|
       t.boolean :is_mention
@@ -6,7 +6,7 @@ class AddIsMentionColumnToTweets < ActiveRecord::Migration
 
     say_with_time "extracting is_mention" do
       Tweet.all.each do |t|
-        # Allow the before_validation hook to populate the is_mention field 
+        # Allow the before_validation hook to populate the is_mention field
         # for us
         t.save!
       end

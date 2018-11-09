@@ -1,13 +1,16 @@
 class HomeController < ApplicationController
   caches_action :index
 
+  CUTOFF = Time.parse('2008-01-01')
+
   def index
     @actions                 = GithubAction.ordered.limit(10)
     @action_count_by_month   = GithubAction.past_year.order('published_at ASC').count_by {|a| a.published_at.beginning_of_month}
     @writing                 = Link.writing.ordered.limit(10)
     @links                   = Link.links.ordered.limit(10)
     @book                    = Book.ordered.first
-    @book_count_by_year      = Book.ordered.count_by{|b| b.finished_at.beginning_of_year}
+    @book_count_by_year      = Book.after(CUTOFF).ordered.count_by{ |b|
+                                  b.finished_at.beginning_of_year}
     @tweet_count             = Tweet.past_year.not_mention.count
     @tweet_count_by_month    = Tweet.past_year.not_mention.order('published_at ASC').count_by {|t| t.published_at.beginning_of_month}
     @tweets                  = Tweet.not_mention.ordered.limit(5)

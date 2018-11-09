@@ -1,10 +1,11 @@
 source 'http://rubygems.org'
 
-ruby '2.4.2'
+ruby '2.5.1'
+
 gem 'rails', '~> 5.0'
 gem 'bootsnap'
 gem 'actionpack-action_caching'
-gem 'pg'
+gem 'sqlite3'
 
 gem 'coffee-script'
 gem 'gon'
@@ -29,6 +30,7 @@ group :development, :test do
 end
 
 group :production do
+  gem 'pg'
   gem 'dalli'
   gem 'memcachier'
   gem 'newrelic_rpm'

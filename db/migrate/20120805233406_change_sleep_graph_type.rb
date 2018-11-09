@@ -1,4 +1,4 @@
-class ChangeSleepGraphType < ActiveRecord::Migration
+class ChangeSleepGraphType < ActiveRecord::Migration[5.1]
   def up
     change_column :sleep_records, :sleep_graph, :text
   end
