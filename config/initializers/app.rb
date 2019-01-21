@@ -4,7 +4,7 @@ Rails.configuration.display_name = 'Aleksey Skryl'
 
 RssFeed.configure do |mod|
   mod.tag = :writing
-  mod.atom = [ 'http://thoughts.skryl.org/rss', 'http://tech.skryl.org/rss', 'https://medium.com/feed/@skryl' ]
+  mod.atom = [ 'https://thoughts.skryl.org', 'https://fiction.skryl.org', 'https://tech.skryl.org', 'https://medium.com/feed/@skryl' ]
 end
 
 RssFeed.configure do |mod|
