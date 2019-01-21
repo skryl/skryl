@@ -8,9 +8,9 @@ class Link < ActiveRecord::Base
   scope :by_tag,   ->(tag) { where(tag: tag) }
 
   def self.new_from_rss_helper(item)
-    new :title        => item.title,
-        :permalink    => item.link,
-        :published_at => Time.parse(item.pubDate.to_s)
+    new :title        => item.title.content,
+        :permalink    => item.link.href,
+        :published_at => item.updated.content
   end
 
 end
