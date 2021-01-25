@@ -4,7 +4,7 @@
 - 🌱 Come [join our team](https://angel.co/nutrisenseio/jobs) at NutriSense
 - 💬 Join me for a coffee [here](https://calendly.com/skryl/30min)
 
-## Stats
+### Stats
 
 ![Alex's github stats](https://github-readme-stats.vercel.app/api?username=skryl&count_private=true&show_icons=true)  
 
